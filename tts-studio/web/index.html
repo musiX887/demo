@@ -9,43 +9,52 @@
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <div class="shell">
-    <header class="topbar">
-      <a class="brand" href="#"><span class="brand-mark" aria-hidden="true">◖</span><span>声场 <span class="brand-sub">TTS STUDIO</span></span></a>
-      <div class="top-actions"><span class="local-badge">本机工作台</span><button id="settings-open" class="button secondary">连接设置</button><button id="theme-toggle" class="icon-button" aria-label="切换深浅主题">◐</button></div>
-    </header>
-    <main>
-      <section class="intro"><div><p class="eyebrow">ONE TEXT. DIFFERENT VOICES.</p><h1>找到文字里的声音。</h1><p class="lede">选择音色，调整表达，让同一段文字在不同模型间开口说话。</p></div><div class="intro-note">豆包 <span>／</span> MiniMax <span>／</span> Qwen</div></section>
-      <aside id="catalog-notice" class="notice" role="note"></aside>
-      <div class="workspace">
-        <section class="composer panel" aria-labelledby="text-title">
-          <div class="section-heading"><h2 id="text-title"><span class="step">01</span> 写下要说的话</h2><span id="char-count" class="muted">0 / 10,000</span></div>
-          <label class="sr-only" for="text">合成文本</label><textarea id="text" maxlength="10000" spellcheck="false" placeholder="输入你想试听的文字……">你好，欢迎来到声场。相同的一段文字，不同的声音，会讲出怎样的故事？今天阳光很好，我们一起出发吧。</textarea>
-          <div class="samples" aria-label="示例文本"><span class="muted">试一段</span><button data-sample="narration" class="text-button">叙事</button><button data-sample="dialogue" class="text-button">情绪对白</button><button data-sample="mixed" class="text-button">中英混合</button><button data-sample="numbers" class="text-button">数字读音</button></div>
-          <div class="section-heading provider-heading"><h2><span class="step">02</span> 选择声音</h2><span id="connection-status" class="status-badge"></span></div>
-          <div id="provider-tabs" class="provider-tabs" role="tablist" aria-label="语音厂商"></div>
-          <div class="field"><label for="model">合成模型</label><select id="model"></select></div>
-          <div class="voice-toolbar"><label for="voice-search">音色列表 <span id="voice-count" class="muted"></span></label><div><a id="voice-docs" target="_blank" rel="noopener noreferrer">官方音色文档 ↗</a><button id="refresh-voices" class="text-button" hidden>刷新系统音色</button></div></div>
-          <input id="voice-search" type="search" placeholder="搜索名称、音色 ID 或语言" autocomplete="off">
-          <div id="voice-list" class="voice-list" role="radiogroup" aria-label="音色"></div>
-          <p id="voice-description" class="hint voice-description"></p>
-          <details class="custom-identity"><summary>使用指定的模型或音色 ID</summary><div class="two-columns"><div class="field"><label for="custom-model">自定义模型 ID</label><input id="custom-model" placeholder="留空使用上方模型"></div><div class="field"><label for="custom-voice">自定义音色 ID</label><input id="custom-voice" placeholder="留空使用所选音色"></div></div><p class="hint">使用自己账号已开通的模型或音色。自定义模型的额外能力请通过高级 JSON 参数配置。</p></details>
-          <p id="provider-notes" class="hint"></p>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="声场工作台"><span class="brand-mark" aria-hidden="true">◖</span><span>声场 <small>TTS STUDIO</small></span></a>
+    <div class="top-actions"><span class="local-badge">本机工作台</span><button id="settings-open" class="button secondary small">连接设置</button><button id="theme-toggle" class="icon-button" aria-label="切换深浅主题">◐</button></div>
+  </header>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <p class="nav-label">创作空间</p>
+      <nav aria-label="工作台导航">
+        <button class="nav-item active" data-view="studio" aria-current="page" title="语音合成"><span class="nav-icon" aria-hidden="true">▤</span>语音合成</button>
+        <button class="nav-item" data-view="compare" title="声音对比"><span class="nav-icon" aria-hidden="true">◫</span>声音对比<span id="nav-queue-count" class="count">0</span></button>
+        <button class="nav-item" data-view="history" title="生成历史"><span class="nav-icon" aria-hidden="true">◷</span>生成历史<span id="nav-result-count" class="count">0</span></button>
+      </nav>
+      <div class="sidebar-note"><span class="sidebar-wave" aria-hidden="true">▂ ▅ ▃ ▇ ▄ ▂</span><strong>同一段文字，更多种声音。</strong><p>豆包 · MiniMax · Qwen</p><p>选音色，调表达，再听听。</p></div>
+      <details class="catalog-info"><summary>关于音色与能力</summary><p id="catalog-notice" class="hint" role="note"></p></details>
+      <div class="sidebar-footer"><span class="status-dot" aria-hidden="true"></span>凭据保存在本机</div>
+    </aside>
+    <main id="main-content">
+      <div class="page-heading"><div><p class="eyebrow">VOICE WORKSPACE</p><h1 id="page-title">文字转语音</h1></div><div class="model-toolbar"><div id="provider-tabs" class="provider-tabs" role="tablist" aria-label="语音厂商"></div><div class="model-field"><label for="model">模型</label><select id="model" aria-label="合成模型"></select></div></div></div>
+      <div id="studio-view" class="workspace">
+        <section class="composer panel" aria-label="合成文本编辑器">
+          <div class="editor-header"><span class="editor-label"><span class="status-dot" aria-hidden="true"></span>文本编辑</span><span class="editor-shortcut">Ctrl / ⌘ + Enter 生成</span></div>
+          <label class="sr-only" for="text">合成文本</label><textarea id="text" maxlength="10000" spellcheck="false" placeholder="写下文字，让声音赋予它新的表达……">你好，欢迎来到声场。相同的一段文字，不同的声音，会讲出怎样的故事？今天阳光很好，我们一起出发吧。</textarea>
+          <div class="editor-toolbar"><div class="samples" aria-label="示例文本"><span class="muted">试一段</span><button data-sample="narration" class="text-button">叙事</button><button data-sample="dialogue" class="text-button">情绪对白</button><button data-sample="mixed" class="text-button">中英混合</button><button data-sample="numbers" class="text-button">数字读音</button><button id="insert-pause" class="tool-button" hidden title="在光标处插入 0.5 秒停顿">＋ 停顿</button></div><div class="editor-counter"><span id="char-count" class="muted">0 / 10,000</span><button id="clear-text" class="icon-button" aria-label="清空文本" title="清空文本">⌫</button></div></div>
+          <div class="generate-area"><div class="generation-info"><p id="selected-summary" class="hint"></p><p class="billing-note">生成使用你的厂商账号，按厂商规则计费。</p></div><div class="generate-actions"><button id="queue-add" class="button secondary">＋ 加入对比</button><button id="synthesize" class="button primary">生成并试听 ↗</button></div></div>
         </section>
-        <section class="controls panel" aria-labelledby="controls-title">
-          <div class="section-heading"><h2 id="controls-title"><span class="step">03</span> 调整表达</h2><a id="api-docs" target="_blank" rel="noopener noreferrer">接口文档 ↗</a></div>
-          <p id="control-summary" class="hint"></p>
-          <div id="controls"></div>
-          <details class="advanced"><summary>高级请求参数</summary><p class="hint">填写 JSON 对象，与厂商请求体合并。模型、音色、文本由表单决定。请对照官方文档填写扩展参数。</p><label class="sr-only" for="extra-json">高级参数 JSON</label><textarea id="extra-json" spellcheck="false" placeholder="{}">{}</textarea><div class="advanced-actions"><button id="preview-button" class="button secondary small">预览实际请求</button></div><pre id="request-preview" hidden></pre></details>
-          <div class="generate-area"><p id="selected-summary" class="hint"></p><button id="synthesize" class="button primary full">生成并试听 <span aria-hidden="true">↗</span></button><button id="queue-add" class="button secondary full">＋ 将当前配置加入对比</button><p class="billing-note">生成会调用你的厂商账号并按厂商规则计费。</p></div>
+        <section class="inspector panel" aria-labelledby="controls-title">
+          <div class="inspector-header"><h2 id="controls-title">调试台</h2><button class="text-button" data-view="history">生成历史 ↗</button></div>
+          <div class="inspector-scroll">
+            <div class="section-heading voice-heading"><h3>音色</h3><button id="reset-controls" class="text-button" title="恢复当前模型的默认参数">↺ 参数重置</button></div>
+            <button id="voice-picker-open" class="current-voice" aria-haspopup="dialog"><span id="current-voice-avatar" class="voice-art" aria-hidden="true">声</span><span class="current-voice-info"><strong id="current-voice-name">选择音色</strong><small id="current-voice-language">查看官方音色列表</small></span><span class="voice-swap" aria-hidden="true">⇄</span></button>
+            <div class="voice-status"><span id="connection-status" class="status-badge"></span><span class="muted">点击音色卡片切换</span></div>
+            <p id="voice-description" class="hint voice-description"></p>
+            <div class="controls-heading"><h3>声音参数</h3><a id="api-docs" target="_blank" rel="noopener noreferrer">接口文档 ↗</a></div>
+            <p id="control-summary" class="hint"></p><div id="controls"></div>
+            <details class="advanced"><summary>高级请求参数</summary><p class="hint">填写 JSON 对象，与厂商请求体合并。模型、音色和文本由表单决定。</p><label class="sr-only" for="extra-json">高级参数 JSON</label><textarea id="extra-json" spellcheck="false" placeholder="{}">{}</textarea><div class="advanced-actions"><button id="preview-button" class="button secondary small">预览实际请求</button></div><pre id="request-preview" hidden></pre></details>
+            <details class="provider-info"><summary>厂商说明与使用限制</summary><p id="provider-notes" class="hint"></p></details>
+          </div>
         </section>
       </div>
-      <section class="panel compare-section" aria-labelledby="compare-title"><div class="section-heading"><div><h2 id="compare-title">声音对比台 <span id="queue-count" class="count">0</span></h2><p class="hint">保存不同厂商、音色或参数，以当前文本统一生成。</p></div><button id="compare-run" class="button primary" disabled>生成全部对比</button></div><div id="queue-list" class="queue-list"><p class="empty">将配置加入对比，再切换音色或厂商。最多保存 6 组。</p></div></section>
-      <section class="results-section" aria-labelledby="results-title"><div class="section-heading"><h2 id="results-title">试听记录 <span id="result-count" class="count">0</span></h2><button id="clear-results" class="text-button">清空页面记录</button></div><p class="hint">音频仅保留在本次服务进程内。最多缓存 30 条，总量约 96 MiB；较早音频会释放，请及时下载。</p><div id="results" class="results"><div class="empty-result"><span aria-hidden="true">〰</span><p>下一段好声音，从这里开始。</p><small>生成后可播放、下载，并查看每次使用的参数。</small></div></div></section>
+      <section id="compare-view" class="panel compare-section" aria-labelledby="compare-title" hidden><div class="section-heading"><div><h2 id="compare-title">声音对比台 <span id="queue-count" class="count">0</span></h2><p class="hint">保存不同厂商、音色或参数，以编辑器中的当前文本统一生成。</p></div><button id="compare-run" class="button primary" disabled>生成全部对比</button></div><div id="queue-list" class="queue-list"></div><button class="button secondary compare-back" data-view="studio">＋ 返回编辑器，添加更多声音</button></section>
+      <section id="history-view" class="results-section" aria-labelledby="results-title" hidden><div class="section-heading"><div><h2 id="results-title">生成历史 <span id="result-count" class="count">0</span></h2><p class="hint">点击试听，在底部播放器中对比声音。重启服务后音频清除，请及时下载。</p></div><button id="clear-results" class="text-button">清空页面记录</button></div><div id="results" class="results"></div></section>
     </main>
-    <footer><span>声场 · 给每一种表达，留一个试听的位置。</span><span>凭据在服务端保存 · 页面不持久化密钥</span></footer>
   </div>
-  <dialog id="settings-dialog"><div class="dialog-header"><div><p class="eyebrow">CONNECTIONS</p><h2>连接你的语音服务</h2></div><button id="settings-close" class="icon-button" aria-label="关闭设置">×</button></div><p class="hint">在下方填写后点击「保存到本机」，API Key、业务空间 ID 和地域会保存到本机，重启后自动恢复。配置文件为 tts-studio/settings.local.json，包含明文凭据，请勿分享；页面不回显已保存的密钥。</p><div id="settings-forms"></div><p id="settings-message" class="dialog-message" role="status"></p></dialog>
+  <footer class="player-bar" aria-label="试听播放器"><div class="player-identity"><span id="player-avatar" class="voice-art player-art" aria-hidden="true">♫</span><div><strong id="player-title">等待一段好声音</strong><small id="player-subtitle">生成后，在这里播放和下载</small></div></div><div class="player-controls"><button id="player-prev" class="icon-button" aria-label="上一条生成记录" title="上一条" disabled>⏮</button><audio id="studio-player" controls preload="none" aria-label="当前音频试听"></audio><button id="player-next" class="icon-button" aria-label="下一条生成记录" title="下一条" disabled>⏭</button></div><a id="player-download" class="button secondary small" hidden>下载音频 ↓</a><span id="player-empty-note" class="muted">音频仅在本机缓存</span><p id="player-error" class="audio-error" role="status" hidden>音频可能已释放或编码不受支持，请重新生成 WAV / MP3。</p></footer>
+  <dialog id="voice-dialog" class="voice-dialog" aria-labelledby="voice-dialog-title"><div class="dialog-header"><div><p class="eyebrow">VOICE LIBRARY</p><h2 id="voice-dialog-title">选择声音</h2></div><button id="voice-dialog-close" class="icon-button" aria-label="关闭音色库">×</button></div><div class="voice-toolbar"><label for="voice-search">官方音色 <span id="voice-count" class="muted"></span></label><div><a id="voice-docs" target="_blank" rel="noopener noreferrer">官方音色文档 ↗</a><button id="refresh-voices" class="text-button" hidden>刷新系统音色</button></div></div><input id="voice-search" type="search" placeholder="搜索名称、音色 ID、语言或风格" autocomplete="off"><div id="voice-list" class="voice-list" role="radiogroup" aria-label="音色"></div><details class="custom-identity"><summary>使用指定的模型或音色 ID</summary><div class="two-columns"><div class="field"><label for="custom-model">自定义模型 ID</label><input id="custom-model" placeholder="留空使用上方模型"></div><div class="field"><label for="custom-voice">自定义音色 ID</label><input id="custom-voice" placeholder="留空使用所选音色"></div></div><p class="hint">填写自己账号已开通的模型或音色。自定义模型的扩展能力请通过高级 JSON 配置。</p></details><div class="dialog-actions"><span class="hint">仅列出当前模型、地域适用的音色</span><button id="voice-dialog-done" class="button primary small">完成选择</button></div></dialog>
+  <dialog id="settings-dialog" aria-labelledby="settings-title"><div class="dialog-header"><div><p class="eyebrow">CONNECTIONS</p><h2 id="settings-title">连接你的语音服务</h2></div><button id="settings-close" class="icon-button" aria-label="关闭设置">×</button></div><p class="hint">点击「保存到本机」后，API Key、业务空间 ID 和地域会在重启时自动恢复。配置文件为 tts-studio/settings.local.json，包含明文凭据，请勿分享；页面不回显已保存的密钥。</p><div id="settings-forms"></div><p id="settings-message" class="dialog-message" role="status"></p></dialog>
   <div id="toast" class="toast" role="status" hidden></div>
 </body>
 </html>

@@ -132,6 +132,8 @@ try {
     return matches;
   }
   async function chooseVoice(id, model, voice) {
+    if (!await evaluate('document.querySelector("#voice-dialog").open')) await click('#voice-picker-open');
+    assert.equal(await evaluate('document.querySelector("#voice-dialog").open'), true);
     await input('#voice-search', voice.id);
     await checkVoiceCount(id, model, voice.id);
     await evaluate(`{
@@ -140,6 +142,8 @@ try {
       card.click();
     }`);
     assert.equal(await evaluate('document.querySelector(".voice-card.selected code").textContent'), voice.id);
+    assert.equal(await evaluate('document.querySelector("#voice-dialog").open'), false, 'Picking a voice closes the library');
+    assert.equal(await evaluate('document.querySelector("#current-voice-name").textContent'), voice.name);
   }
   async function hasControl(key, expected = true) {
     assert.equal(await evaluate(`Boolean(document.querySelector(${JSON.stringify(`#param-${key}`)}))`), expected, `${key} control ${expected ? 'available' : 'absent'}`);
@@ -217,6 +221,11 @@ try {
   await click('#queue-add');
 
   await chooseProvider('minimax');
+  assert.equal(await evaluate('document.querySelector("#insert-pause").hidden'), false);
+  await input('#text', '停顿插入检查。');
+  await evaluate('document.querySelector("#text").setSelectionRange(2, 2)');
+  await click('#insert-pause');
+  assert.equal(await evaluate('document.querySelector("#text").value'), '停顿<#0.5#>插入检查。');
   const miniModel = await evaluate('document.querySelector("#model").value');
   await checkVoiceCount('minimax', miniModel);
   await hasControl('pitch');
@@ -311,10 +320,28 @@ try {
   await until('document.querySelector("audio").readyState >= 2');
   assert.equal(await evaluate('document.querySelector(".audio-error").hidden'), true);
   await input('#text', '这是三家共用的对比文本。');
+  await click('.nav-item[data-view="compare"]');
+  assert.equal(await evaluate('document.querySelector("#compare-view").hidden'), false);
+  assert.equal(await evaluate('document.querySelector("#studio-view").hidden'), true);
   failMini = true;
   await click('#compare-run');
   await until('Boolean(document.querySelector(".batch-error")) && !document.querySelector("#synthesize").disabled');
   assert.equal(await evaluate('document.querySelectorAll(".result-card").length'), 3);
+  assert.equal(await evaluate('document.querySelector("#history-view").hidden'), false, 'Comparison opens generation history');
+  const firstAudio = await evaluate('document.querySelector("#studio-player").getAttribute("src")');
+  await click('.result-card .result-play');
+  await until('document.querySelector("#studio-player").readyState >= 2');
+  assert.equal(await evaluate('document.querySelectorAll("audio").length'), 1, 'Results share one persistent player');
+  const activeAudio = await evaluate('document.querySelector("#studio-player").getAttribute("src")');
+  assert.notEqual(activeAudio, firstAudio, 'History selection switches the persistent audio');
+  await click('#player-prev');
+  assert.notEqual(await evaluate('document.querySelector("#studio-player").getAttribute("src")'), activeAudio, 'Previous record changes audio');
+  await click('#player-next');
+  assert.equal(await evaluate('document.querySelector("#studio-player").getAttribute("src")'), activeAudio, 'Next record restores audio');
+  assert.ok(await evaluate('!document.querySelector("#player-download").hidden'));
+  await click('.nav-item[data-view="studio"]');
+  assert.equal(await evaluate('document.querySelector("#studio-player").getAttribute("src")'), activeAudio, 'Navigation preserves playback');
+  await click('.nav-item[data-view="history"]');
   assert.match(await evaluate('document.querySelector(".batch-error").textContent'), /2 组成功，1 组失败/);
   assert.equal(requests.length, 4);
   assert.ok(requests.slice(1).every(job => job.text === '这是三家共用的对比文本。'));
@@ -342,12 +369,37 @@ try {
   assert.equal(await evaluate('document.querySelector("#credential-qwen-api_key").value'), '');
   assert.equal(await evaluate('Object.values(localStorage).some(value => value.includes("fake-browser-test-key"))'), false);
   await click('#settings-close');
-  await click('#theme-toggle');
-  await evaluate('document.querySelector("details.advanced").open = false; window.scrollTo(0, 0)');
+  await click('.nav-item[data-view="studio"]');
+  await input('#param-speed', '1.4');
+  await click('#reset-controls');
+  assert.equal(await evaluate('document.querySelector("#param-speed").value'), '1');
+  assert.equal(await evaluate('document.querySelector("#param-instructions").value'), '');
+  assert.equal(await evaluate('document.querySelectorAll(".queue-item").length'), 3, 'Reset preserves comparison snapshots');
+  await click('#clear-text');
+  assert.equal(await evaluate('document.querySelector("#text").value'), '');
+  await evaluate('document.querySelector("#text").dispatchEvent(new KeyboardEvent("keydown", {key:"Enter", ctrlKey:true, bubbles:true}))');
+  assert.match(await evaluate('document.querySelector("#toast").textContent'), /请先输入/);
+  assert.equal(requests.length, 4, 'Empty keyboard submission does not call synthesis');
+  await input('#text', '这是三家共用的对比文本。');
+  await evaluate('document.documentElement.dataset.theme = "light"; document.querySelector(".inspector-scroll").scrollTop = 0; window.scrollTo(0, 0)');
+  assert.ok(await evaluate('document.querySelector("#text").getBoundingClientRect().width > document.querySelector(".inspector").getBoundingClientRect().width'), 'Desktop prioritizes the editor');
+  assert.ok(await evaluate('document.querySelector("#synthesize").getBoundingClientRect().bottom <= document.querySelector(".player-bar").getBoundingClientRect().top'), 'Generation remains above the persistent player');
+  assert.ok(await evaluate('document.documentElement.scrollHeight <= innerHeight + 1'), 'Desktop workspace fits one viewport');
+  await evaluate('document.querySelector("#toast").hidden = true');
   const desktop = await cdp('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true});
   await writeFile(path.join(artifacts, 'desktop.png'), Buffer.from(desktop.data, 'base64'));
+  await click('#theme-toggle');
+  assert.equal(await evaluate('document.documentElement.dataset.theme'), 'dark');
+  const dark = await cdp('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true});
+  await writeFile(path.join(artifacts, 'desktop-dark.png'), Buffer.from(dark.data, 'base64'));
+  await click('#theme-toggle');
   await cdp('Emulation.setDeviceMetricsOverride', {width: 400, height: 880, deviceScaleFactor: 1, mobile: true});
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Phone layout has no horizontal overflow');
+  await click('#voice-picker-open');
+  assert.equal(await evaluate('document.querySelector("#voice-dialog").open'), true);
+  assert.ok(await evaluate('document.querySelector("#voice-dialog").getBoundingClientRect().width <= innerWidth - 32'), 'Phone voice library fits within viewport gutters');
+  await click('#voice-dialog-close');
+  await evaluate('window.scrollTo(0, 0)');
   const mobile = await cdp('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true});
   await writeFile(path.join(artifacts, 'mobile.png'), Buffer.from(mobile.data, 'base64'));
   assert.deepEqual(errors, [], 'No browser JavaScript errors');

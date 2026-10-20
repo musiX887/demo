@@ -1,7 +1,7 @@
 'use strict';
 
 const $ = id => document.getElementById(id);
-const state = {catalog: null, settings: null, provider: 'doubao', models: {}, sessions: {}, queue: [], results: [], busy: false, voiceLimit: 100};
+const state = {catalog: null, settings: null, provider: 'doubao', models: {}, sessions: {}, queue: [], results: [], busy: false, voiceLimit: 100, view: 'studio', activeResultId: null};
 let toastTimer;
 const samples = {
   narration: '黄昏的时候，最后一班电车穿过小城。她捧着一杯热茶，看着窗外缓缓亮起的灯，忽然觉得，生活还有许多值得期待的事。',
@@ -75,9 +75,26 @@ function updateCount() {
   $('char-count').textContent = limit;
   $('char-count').classList.toggle('over-limit', info.maxTextBytes ? bytes > info.maxTextBytes : count > (info.maxText || 10000));
 }
+function setView(view) {
+  if (!['studio', 'compare', 'history'].includes(view)) return;
+  state.view = view;
+  for (const name of ['studio', 'compare', 'history']) $(`${name}-view`).hidden = name !== view;
+  document.querySelectorAll('.nav-item').forEach(button => {
+    const active = button.dataset.view === view;
+    button.classList.toggle('active', active);
+    if (active) button.setAttribute('aria-current', 'page');
+    else button.removeAttribute('aria-current');
+  });
+  $('page-title').textContent = {studio: '文字转语音', compare: '声音对比', history: '生成历史'}[view];
+  document.querySelector('.model-toolbar').hidden = view !== 'studio';
+}
 function updateSummary() {
   const s = session();
   const name = s.customVoice || selectedVoice()?.name || '尚未选择音色';
+  $('current-voice-name').textContent = name;
+  $('current-voice-language').textContent = s.customVoice ? '自定义音色' : selectedVoice()?.language || '查看官方音色列表';
+  $('current-voice-avatar').textContent = name.slice(0, 1);
+  $('current-voice-name').title = name;
   $('selected-summary').textContent = `${provider().name} · ${s.customModel || modelId()} · ${name}`;
   const configured = configuredFor({provider: state.provider, model: s.customModel || modelId()});
   $('connection-status').textContent = configured ? '凭据已配置' : state.provider === 'qwen' && state.settings.providers.qwen.configured ? '需填写业务空间 ID' : '尚未配置凭据';
@@ -85,11 +102,13 @@ function updateSummary() {
 }
 function renderProviders() {
   $('provider-tabs').replaceChildren(...state.catalog.providers.map(p => element('button', {
-    class: `provider-tab ${p.id === state.provider ? 'active' : ''}`, role: 'tab', 'aria-selected': String(p.id === state.provider),
+    class: `provider-tab ${p.id === state.provider ? 'active' : ''}`, role: 'tab', 'aria-selected': String(p.id === state.provider), title: p.subtitle,
     onclick: () => { state.provider = p.id; state.voiceLimit = 100; $('voice-search').value = ''; renderSelection(); }
   }, [element('strong', {text: p.name}), element('small', {text: p.subtitle})])));
 }
 function renderSelection() {
+  document.documentElement.dataset.provider = state.provider;
+  $('insert-pause').hidden = state.provider !== 'minimax';
   renderProviders();
   const p = provider();
   const s = session();
@@ -120,7 +139,7 @@ function renderVoices() {
   $('voice-list').replaceChildren(...voices.slice(0, state.voiceLimit).map(v => element('button', {
     class: `voice-card ${session().voice === v.id ? 'selected' : ''}`, role: 'radio', 'aria-checked': String(session().voice === v.id),
     title: [v.name, v.description, v.id].filter(Boolean).join(' · '),
-    onclick: () => { session().voice = v.id; renderVoices(); renderControls(); updateSummary(); }
+    onclick: () => { session().voice = v.id; session().customVoice = ''; $('custom-voice').value = ''; renderVoices(); renderControls(); updateSummary(); $('voice-dialog').close(); }
   }, [element('span', {class: 'voice-initial', text: v.name.slice(0, 1)}), element('span', {class: 'voice-info'}, [element('strong', {text: v.name}), element('small', {text: `${v.language} · ${v.source === 'MiniMax get_voice · system' ? '接口返回' : v.verified ? '官方文档' : '自定义'}`}), element('code', {text: v.id})]), element('span', {class: 'voice-check', 'aria-hidden': 'true', text: session().voice === v.id ? '●' : '○'})])));
   if (voices.length > state.voiceLimit) $('voice-list').append(element('button', {class: 'button secondary load-more', text: `显示更多（还有 ${voices.length - state.voiceLimit} 个）`, onclick: () => { state.voiceLimit += 100; renderVoices(); }}));
   if (!voices.length) $('voice-list').append(element('p', {class: 'empty', text: '没有匹配的音色。可尝试其他关键词，或指定音色 ID。'}));
@@ -337,12 +356,58 @@ function providerName(id) { return state.catalog.providers.find(p => p.id === id
 function voiceName(job) { return state.catalog.providers.find(p => p.id === job.provider)?.voices.find(v => v.id === job.voice)?.name || job.voice; }
 function renderQueue() {
   $('queue-count').textContent = state.queue.length;
+  $('nav-queue-count').textContent = state.queue.length;
   $('compare-run').disabled = state.busy || !state.queue.length;
   $('queue-list').replaceChildren(...state.queue.map((job, index) => element('article', {class: 'queue-item'}, [element('span', {class: 'queue-index', text: String(index + 1).padStart(2, '0')}), element('div', {class: 'queue-info'}, [element('strong', {text: `${providerName(job.provider)} · ${voiceName(job)}`}), element('small', {text: job.model}), element('small', {text: job.params.instructions || (job.params.emotion ? `情绪：${job.params.emotion}` : '默认表达')})]), element('button', {class: 'icon-button', 'aria-label': `移除第 ${index + 1} 组对比`, text: '×', onclick: () => { state.queue.splice(index, 1); renderQueue(); }})])));
   if (!state.queue.length) $('queue-list').append(element('p', {class: 'empty', text: '将配置加入对比，再切换音色或厂商。最多保存 6 组。'}));
 }
+function syncPlayerButtons() {
+  const audio = $('studio-player');
+  const index = state.results.findIndex(result => result.id === state.activeResultId);
+  $('player-prev').disabled = index < 0 || index >= state.results.length - 1;
+  $('player-next').disabled = index <= 0;
+  document.querySelectorAll('.result-card').forEach(card => {
+    const active = card.dataset.resultId === state.activeResultId;
+    card.classList.toggle('active', active);
+    const button = card.querySelector('.result-play');
+    button.textContent = active && !audio.paused ? 'Ⅱ 暂停试听' : '▶ 试听';
+    button.setAttribute('aria-pressed', String(active && !audio.paused));
+  });
+}
+function selectResult(result, play = false) {
+  const audio = $('studio-player');
+  if (state.activeResultId !== result.id) {
+    audio.pause();
+    state.activeResultId = result.id;
+    audio.src = result.audioUrl;
+    $('player-error').hidden = true;
+  }
+  $('player-title').textContent = voiceName(result);
+  $('player-title').title = voiceName(result);
+  $('player-avatar').textContent = voiceName(result).slice(0, 1);
+  $('player-subtitle').textContent = `${providerName(result.provider)} · ${result.model} · ${result.originalFormat.toUpperCase()}`;
+  $('player-download').href = result.downloadUrl;
+  $('player-download').hidden = false;
+  $('player-empty-note').hidden = true;
+  syncPlayerButtons();
+  if (play) audio.play().catch(() => toast('播放未能开始，请点击底部播放器重试，或下载音频。', true));
+}
+function clearPlayer() {
+  const audio = $('studio-player');
+  audio.pause(); audio.removeAttribute('src'); audio.load();
+  state.activeResultId = null;
+  $('player-title').textContent = '等待一段好声音';
+  $('player-subtitle').textContent = '生成后，在这里播放和下载';
+  $('player-avatar').textContent = '♫';
+  $('player-download').hidden = true;
+  $('player-download').removeAttribute('href');
+  $('player-empty-note').hidden = false;
+  $('player-error').hidden = true;
+  syncPlayerButtons();
+}
 function renderResults() {
   $('result-count').textContent = state.results.length;
+  $('nav-result-count').textContent = state.results.length;
   $('results').replaceChildren(...state.results.map(result => {
     const payload = element('pre', {text: JSON.stringify({params: result.params, payload: result.payload, vendorMetadata: result.vendorMetadata || {}}, null, 2)});
     const details = element('details', {class: 'result-details'}, [element('summary', {text: '查看请求、用量与字幕 / 时间戳'}), payload]);
@@ -354,18 +419,23 @@ function renderResults() {
       } catch {}
     }
     const info = `${result.model} · ${result.sampleRate / 1000} kHz · ${result.originalFormat.toUpperCase()} · ${(result.bytes / 1024).toFixed(1)} KiB`;
-    const audio = element('audio', {controls: '', preload: 'none', src: result.audioUrl, 'aria-label': `${providerName(result.provider)} ${voiceName(result)}试听`});
-    audio.addEventListener('error', () => { audio.parentElement.querySelector('.audio-error').hidden = false; });
-    return element('article', {class: 'result-card'}, [
+    const play = element('button', {class: 'result-play', type: 'button', 'aria-label': `试听 ${voiceName(result)}`, onclick: () => {
+      if (state.activeResultId === result.id && !$('studio-player').paused) $('studio-player').pause();
+      else selectResult(result, true);
+    }});
+    return element('article', {class: 'result-card', 'data-result-id': result.id}, [
       element('div', {class: 'result-heading'}, [element('div', {}, [element('span', {class: 'result-provider', text: providerName(result.provider)}), element('h3', {text: voiceName(result)})]), element('div', {class: 'result-meta'}, [element('span', {text: `耗时 ${result.elapsed.toFixed(2)} s`}), element('small', {text: new Date(result.createdAt * 1000).toLocaleTimeString()})])]),
-      element('p', {class: 'result-text', text: result.text}), audio,
-      element('p', {class: 'audio-error hint', hidden: true, text: '音频可能已释放，或浏览器不支持该编码。请尝试下载，或重新生成 WAV / MP3。'}),
+      element('p', {class: 'result-text', text: result.text}), play,
       element('div', {class: 'result-bottom'}, [element('small', {text: info}), element('a', {class: 'download-link', href: result.downloadUrl, text: '下载音频 ↓'})]), details
     ]);
   }));
-  if (!state.results.length) $('results').append(element('div', {class: 'empty-result'}, [element('span', {'aria-hidden': 'true', text: '〰'}), element('p', {text: '下一段好声音，从这里开始。'}), element('small', {text: '生成后可播放、下载，并查看每次使用的参数。'})]));
+  if (!state.results.length) {
+    $('results').append(element('div', {class: 'empty-result'}, [element('span', {'aria-hidden': 'true', text: '〰'}), element('p', {text: '下一段好声音，从这里开始。'}), element('small', {text: '生成后可播放、下载，并查看每次使用的参数。'})]));
+    clearPlayer();
+  } else selectResult(state.results.find(result => result.id === state.activeResultId) || state.results[0]);
 }
 async function generateOne() {
+  if (state.busy) return;
   try {
     const job = getJob();
     if (!job.text) throw new Error('请先输入要合成的文本。');
@@ -375,12 +445,13 @@ async function generateOne() {
     state.results.unshift(result);
     state.results = state.results.slice(0, 30);
     renderResults();
-    $('results').scrollIntoView({behavior: 'smooth', block: 'start'});
-    toast('已生成。点击播放器试听。');
+    selectResult(result);
+    toast('已生成，可在底部播放器试听，或到生成历史查看详情。');
   } catch (error) { toast(error.message, true); }
   finally { setBusy(false); }
 }
 async function compareAll() {
+  if (state.busy) return;
   const text = $('text').value.trim();
   if (!text) return toast('请先输入用于对比的文本。', true);
   const jobs = structuredClone(state.queue);
@@ -406,7 +477,7 @@ async function compareAll() {
       $('results').prepend(message);
       toast(`${success} 组成功，${errors.length} 组失败，详细信息已显示在试听记录中。`, true);
     } else toast(`已生成 ${success} 组对比。`);
-    $('results').scrollIntoView({behavior: 'smooth', block: 'start'});
+    setView('history');
   } finally { setBusy(false); }
 }
 function renderSettings() {
@@ -446,10 +517,40 @@ async function initialize() {
   try {
     [state.catalog, state.settings] = await Promise.all([api('/api/catalog'), api('/api/settings')]);
     $('catalog-notice').textContent = state.catalog.notice;
-    renderSelection(); renderSettings(); renderQueue(); updateCount();
+    renderSelection(); renderSettings(); renderQueue(); renderResults(); updateCount();
   } catch (error) { $('catalog-notice').textContent = error.message; $('synthesize').disabled = true; }
 }
 
+document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => setView(button.dataset.view)));
+document.querySelector('.brand').addEventListener('click', event => { event.preventDefault(); setView('studio'); });
+$('voice-picker-open').addEventListener('click', () => {
+  if (!state.catalog) return;
+  $('voice-dialog').showModal(); $('voice-search').focus();
+});
+for (const id of ['voice-dialog-close', 'voice-dialog-done']) $(id).addEventListener('click', () => $('voice-dialog').close());
+$('reset-controls').addEventListener('click', () => {
+  if (!state.catalog || state.busy) return;
+  session().params = {...structuredClone(defaults[state.provider]), ...structuredClone(model().defaults || {})};
+  session().extra = '{}'; $('extra-json').value = '{}'; $('request-preview').hidden = true;
+  renderControls(); toast('已恢复当前模型的默认参数。');
+});
+$('clear-text').addEventListener('click', () => { $('text').value = ''; updateCount(); $('text').focus(); });
+$('insert-pause').addEventListener('click', () => {
+  if (state.provider !== 'minimax') return;
+  const text = $('text');
+  text.setRangeText('<#0.5#>', text.selectionStart, text.selectionEnd, 'end');
+  updateCount(); text.focus();
+});
+$('text').addEventListener('keydown', event => {
+  if ((event.ctrlKey || event.metaKey) && event.key === 'Enter' && !event.isComposing) { event.preventDefault(); if (state.catalog) generateOne(); }
+});
+$('studio-player').addEventListener('error', () => { $('player-error').hidden = !state.activeResultId; });
+for (const event of ['play', 'pause', 'ended']) $('studio-player').addEventListener(event, syncPlayerButtons);
+for (const [id, step] of [['player-prev', 1], ['player-next', -1]]) $(id).addEventListener('click', () => {
+  const index = state.results.findIndex(result => result.id === state.activeResultId);
+  const result = index >= 0 && state.results[index + step];
+  if (result) selectResult(result, true);
+});
 $('text').addEventListener('input', updateCount);
 document.querySelectorAll('[data-sample]').forEach(button => button.addEventListener('click', () => { $('text').value = samples[button.dataset.sample]; updateCount(); }));
 $('model').addEventListener('change', () => { state.models[state.provider] = $('model').value; $('voice-search').value = ''; renderSelection(); });
