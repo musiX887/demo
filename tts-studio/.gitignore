@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+settings.local.json
+settings.local.json.*.tmp
+__pycache__/
+*.pyc
+.venv/
+.playwright/

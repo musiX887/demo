@@ -1,0 +1,89 @@
+{
+  "verifiedOn": "2026-10-19",
+  "verification": "官方网页原始 HTML 表格与官方 XLSX 逐行提取；未调用付费合成接口",
+  "counts": {
+    "systemVoices": 130,
+    "systemByModel": {
+      "qwen-audio-3.1-tts-flash": 68,
+      "qwen-audio-3.0-tts-plus": 2,
+      "qwen-audio-3.0-tts-flash": 12,
+      "qwen3-tts-flash": 48
+    },
+    "qwenAudio31Groups": {
+      "多语种与方言音色": 4,
+      "精品中文音色": 22,
+      "精品英文音色": 15,
+      "其他系统音色": 27
+    },
+    "baseVoices": 1194,
+    "baseByModel": {
+      "qwen-audio-3.0-tts-plus": 597,
+      "qwen-audio-3.0-tts-flash": 597
+    },
+    "uniqueBaseVoiceSuffixes": 597,
+    "uniqueCombinedIds": 1324
+  },
+  "sources": [
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+      "sha256": "256f983c4ef16a464c85689a5f8ea46f6b7c0108b509ee412c6b04990cf62387",
+      "evidence": "以下音色支持 qwen3-tts-flash 模型。",
+      "validation": "非实时表含 48 个数据行；另一个实时表也有 48 行，但未作为额外音色重复导入。保留 Eldric Sage、Ono Anna、Radio Gol 等参数中的空格。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+      "sha256": "b52e41f1c48629d0a35e77fbf4d0367426c6c3aa8985631fb3d41a8e96dff1f9",
+      "evidence": [
+        "多语种与方言音色、精品英文音色支持北京和新加坡地域，其他类型音色仅支持北京地域。",
+        "除上述系统音色外，qwen-audio-3.0-tts-plus 和qwen-audio-3.0-tts-flash 各自还提供 500 余个通过声音复刻生成的基础音色，调用方式与系统音色一致。",
+        "基础音色命名格式为qwen-audio-3.0-tts-{plus|flash}-{音色后缀}，两个模型同一后缀对应同一套试听音频。"
+      ],
+      "validation": "六张系统音色表的数据行数依次为 4、22、15、27、2、12；共 82。系统音色能力以每行特性支持列为准。"
+    },
+    {
+      "url": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260723/ydwqqz/qwen-audio-3.0-tts-plus%E5%9F%BA%E7%A1%80%E9%9F%B3%E8%89%B2.xlsx",
+      "sha256": "a616f1e94421e5ec5aabea0c997dd70ef048b816f8076a2ee0deca68e608838d",
+      "model": "qwen-audio-3.0-tts-plus",
+      "sheet": "Sheet1",
+      "rowsIncludingHeader": 598,
+      "dataRows": 597
+    },
+    {
+      "url": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260723/thosjr/qwen-audio-3.0-tts-flash%E5%9F%BA%E7%A1%80%E9%9F%B3%E8%89%B2.xlsx",
+      "sha256": "f514f5546546811617b17b3d9c520910f098d3b594e44eb01ab388f2eabfd85b",
+      "model": "qwen-audio-3.0-tts-flash",
+      "sheet": "Sheet1",
+      "rowsIncludingHeader": 598,
+      "dataRows": 597
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-http-api",
+      "evidence": {
+        "instruction": "设置指令，用于控制方言、情感或角色等合成效果。",
+        "word_timestamp_enabled": "仅在流式输出模式下可用。支持复刻音色；支持的系统音色请参见 Qwen-Audio-TTS 音色列表。",
+        "enable_ssml": "SSML 的使用限制（支持的模型、音色和接口），请参见使用限制。"
+      }
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/ssml-latex-user-guide#sl01_constraint_h3",
+      "evidence": "音色：仅复刻音色，以及 Qwen-Audio-TTS 音色列表和 CosyVoice 音色列表中标注为支持 SSML 的系统音色可用。",
+      "modelEvidence": "支持模型列表包括 qwen-audio-3.1-tts-flash、qwen-audio-3.0-tts-flash、qwen-audio-3.0-tts-plus。"
+    }
+  ],
+  "baseVoiceCapabilities": {
+    "explicitPerVoiceMatrix": false,
+    "spreadsheetColumns": ["序号", "名称", "voice参数", "性别", "年龄", "特质", "适用场景", "语种", "预览音频文件名"],
+    "assessment": "两份基础音色表均没有 instructions、SSML、timestamps 能力列。官方称基础音色通过声音复刻生成；SSML 和时间戳文档支持复刻音色，存在类别关联，但没有单独列出这 1194 个基础音色的能力保证。模型具有某个参数不构成所有音色均支持该参数的证据，因此未将模型能力批量写入基础音色。",
+    "catalogueRepresentation": "省略 capabilities 和未明示的 regions；emotionSupport 为 unknown。",
+    "timestampConstraint": "API 的 word_timestamp_enabled 仅适用于流式输出。"
+  },
+  "validationAndCaveats": [
+    "两份 XLSX 各仅一个工作表；597 条编号连续，均为九列。全部 597 对音色后缀、名称、性别、年龄、描述、场景、语言和预览文件名一致，仅模型前缀不同。",
+    "每份基础表含中文 589 条、英文 8 条；合计 1194 个模型专属 ID，不能将两个模型前缀合并为一个可调用 ID。",
+    "基础表第 404 行（序号 403）的龙川蓉朔 / longchuanrongshuo 性别原值为“不能”。两个目录记录均保留 sourceGender，gender 设为“官方未注明”。",
+    "系统表性别忠实保留原文，包括部分名称与通常性别印象不同的条目；未按名称猜测。",
+    "Qwen-Audio 3.1 的其他系统音色 27 条未明确声明语言，language 设为“官方未注明”；未外推精品中文组的语言限制。",
+    "Qwen3 仅匹配 qwen3-tts-flash；未添加 instruct 型号。其音色表没有三项能力或地域声明，因此省略这些字段。",
+    "3.0 系统音色及基础音色表未明确声明逐音色地域，因此省略 regions。"
+  ]
+}

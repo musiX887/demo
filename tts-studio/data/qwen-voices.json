@@ -1,0 +1,2532 @@
+[
+  {
+    "id": "longanhuan_v3.1",
+    "name": "龙安欢_v3.1",
+    "gender": "女",
+    "language": "上海话、广东话、东北话、重庆话、陕西话、云南话、宁波话、甘肃话；日语、韩语、法语、德语、葡萄牙语、意大利语、越南语、印尼语",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "多语种与方言音色",
+    "description": "多语种与方言音色",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanlingxin_v3.1",
+    "name": "龙安灵心_v3.1",
+    "gender": "女",
+    "language": "上海话、广东话、东北话、重庆话、陕西话、云南话、宁波话、甘肃话；日语、韩语、法语、德语、葡萄牙语、意大利语、越南语、印尼语",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "多语种与方言音色",
+    "description": "多语种与方言音色",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanfengyue_v3.1",
+    "name": "龙安风悦_v3.1",
+    "gender": "女",
+    "language": "上海话、广东话、东北话、重庆话、陕西话、云南话、宁波话、甘肃话；日语、韩语、法语、德语、葡萄牙语、意大利语、越南语、印尼语",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "多语种与方言音色",
+    "description": "多语种与方言音色",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "xunanchuan_v3.1",
+    "name": "许南川",
+    "gender": "男",
+    "language": "上海话、广东话、东北话、重庆话、陕西话、云南话、宁波话、甘肃话；日语、韩语、法语、德语、葡萄牙语、意大利语、越南语、印尼语",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "多语种与方言音色",
+    "description": "多语种与方言音色",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "yuxiaoyun_v3.1",
+    "name": "于小云",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "元气、亲切、自然",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "广告营销、广播、客服助手、旁白",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "qiaoxiaojiao_v3.1",
+    "name": "乔小娇",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "俏丽、可爱",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "广告营销、客服助手、有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "xiaxiaochen_v3.1",
+    "name": "夏小晨",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "元气、明亮",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "广告营销、有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "anmingyuan_v3.1",
+    "name": "安明远",
+    "gender": "男",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "清亮、自然",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "广告营销、有声书、旁白",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "wenhuaiqing_v3.1",
+    "name": "温怀清",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "清亮、柔和",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "儿童故事、客服助手、广告营销、新闻播报",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "anxiaolan_v3.1",
+    "name": "安小岚",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "清甜、纯净",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书、客服助手、旁白、新闻播报、广告营销",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "xieshurou_v3.1",
+    "name": "谢舒柔",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "柔和、自然、知性",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书、客服助手、旁白",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "baiqinglan_v3.1",
+    "name": "白清岚",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "明亮、清纯",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "语音助手、客服助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "xuyuyuan_v3.1",
+    "name": "许玉远",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "知性、成熟、质感",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "广告营销、新闻播报、旁白、客服助手、有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "anruorou_v3.1",
+    "name": "安若柔",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "气声、知性",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "旁白、语音助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "wenhuaizhi_v3.1",
+    "name": "闻怀之",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "稳重、成熟",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书、新闻播报、广告营销、客服助手、旁白",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "xiaoxingzhi_v3.1",
+    "name": "萧行之",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "端庄、贵气",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "新闻播报、有声书、旁白、客服助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "guyunshu_v3.1",
+    "name": "顾云舒",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "成熟、稳重",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "音乐电台、客服助手、有声书、旁白",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "huozhuoshi_v3.1",
+    "name": "霍拙石",
+    "gender": "男",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "清亮",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书、广告营销、旁白",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "yeqinghe_v3.1",
+    "name": "叶清禾",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "亲切、温柔",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书、广告营销、旁白、客服助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "yunhuanhuan_v3.1",
+    "name": "云欢欢",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "高亢、热情",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书、旁白、客服助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "xuxiaoqiao_v3.1",
+    "name": "徐小俏",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "自然、俏皮",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书、旁白、客服助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "baianran_v3.1",
+    "name": "白安然",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "低沉、浑厚、气声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "配音讲解、有声书、旁白",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "xuyanchu_v3.1",
+    "name": "许言初",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "沉稳、磁性",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "新闻播报、有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "yezhiqing_v3.1",
+    "name": "叶知晴",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "轻快、自然",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "儿童故事、客服助手、语音助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "andi_v3.1",
+    "name": "安迪",
+    "gender": "男",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "ABC 口音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "语音助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "anyuqing_v3.1",
+    "name": "安语晴",
+    "gender": "女",
+    "language": "中文（普通话）",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品中文音色",
+    "description": "甜妹",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "语音助手、旁白、新闻播报",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Emily_v3.1",
+    "name": "Emily",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "英式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Luna_v3.1",
+    "name": "Luna",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "英式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Eric_v3.1",
+    "name": "Eric",
+    "gender": "男",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "英式男声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Luca_v3.1",
+    "name": "Luca",
+    "gender": "男",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "英式男声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Abby_v3.1",
+    "name": "Abby",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Annie_v3.1",
+    "name": "Annie",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Ava_v3.1",
+    "name": "Ava",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Beth_v3.1",
+    "name": "Beth",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Betty_v3.1",
+    "name": "Betty",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Cally_v3.1",
+    "name": "Cally",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Cindy_v3.1",
+    "name": "Cindy",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Donna_v3.1",
+    "name": "Donna",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Andy_v3.1",
+    "name": "Andy",
+    "gender": "男",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式男声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "Brian_v3.1",
+    "name": "Brian",
+    "gender": "男",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式男声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "David_v3.1",
+    "name": "David",
+    "gender": "男",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "精品英文音色",
+    "description": "美式男声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "regions": [
+      "cn",
+      "intl"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanyuanfei_v3.1",
+    "name": "龙安元妃_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "高傲妃子音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longjielidou_v3.1",
+    "name": "龙杰力豆_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "天真男童音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "儿童陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanlingxi_v3.1",
+    "name": "龙安灵希_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "可爱甜美音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（精品中文）",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longhuohuo_v3.1",
+    "name": "龙火火_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "顽皮少年音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "角色音",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longyingtao_v3.1",
+    "name": "龙应桃_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "温柔淡定女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "客服",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanya_v3.1",
+    "name": "龙安雅_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "高雅气质女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longwan_v3.1",
+    "name": "龙婉_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "细腻柔声女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longxing_v3.1",
+    "name": "龙星_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "温婉邻家女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longhua_v3.1",
+    "name": "龙华_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "元气甜美女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longhan_v3.1",
+    "name": "龙寒_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "温暖痴情男",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanzhi_v3.1",
+    "name": "龙安智_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "睿智轻熟男",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longzhe_v3.1",
+    "name": "龙哲_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "呆板大暖男",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanyang_v3.1",
+    "name": "龙安洋_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "阳光大男孩",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（标杆音色）",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "libai_v3.1",
+    "name": "李白_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "古代诗仙男",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "诗词朗诵",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longling_v3.1",
+    "name": "龙铃_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "稚气呆板女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "童声",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longniuniu_v3.1",
+    "name": "龙牛牛_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "阳光男童声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "消费电子-儿童有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longshanshan_v3.1",
+    "name": "龙闪闪_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "戏剧化童声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "消费电子-儿童有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longpaopao_v3.1",
+    "name": "龙泡泡_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "飞天泡泡音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "消费电子-儿童陪伴",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "loongstella_v3.1",
+    "name": "loongstella_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "飒爽利落女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "新闻播报",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longyuan_v3.1",
+    "name": "龙媛_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "温暖治愈女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longmiao_v3.1",
+    "name": "龙妙_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "抑扬顿挫女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longsanshu_v3.1",
+    "name": "龙三叔_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "沉稳质感男",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "有声书",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanli_v3.1",
+    "name": "龙安莉_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "利落从容女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "语音助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanwen_v3.1",
+    "name": "龙安温_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "优雅知性女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "语音助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanlang_v3.1",
+    "name": "龙安朗_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "清爽利落男",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "语音助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longxiaoxia_v3.1",
+    "name": "龙小夏_v3.1",
+    "gender": "女",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "沉稳权威女",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "语音助手",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanchong_v3.1",
+    "name": "龙安冲_v3.1",
+    "gender": "男",
+    "language": "官方未注明",
+    "models": [
+      "qwen-audio-3.1-tts-flash"
+    ],
+    "category": "其他系统音色",
+    "description": "激情推销男",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "直播带货",
+    "regions": [
+      "cn"
+    ],
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanlingxin",
+    "name": "龙安灵心",
+    "gender": "女",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-plus"
+    ],
+    "category": "社交陪伴（旗舰音色）",
+    "description": "知心温暖音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（旗舰音色）",
+    "age": 25,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanlufeng",
+    "name": "龙安鲁风",
+    "gender": "男",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-plus"
+    ],
+    "category": "社交陪伴（旗舰音色）",
+    "description": "明亮开朗音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（旗舰音色）",
+    "age": 25,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanfengyue",
+    "name": "龙安风悦",
+    "gender": "女",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "社交陪伴（精品中文）",
+    "description": "自然亲切音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（精品中文）",
+    "age": 30,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanyuanfei",
+    "name": "龙安元妃",
+    "gender": "女",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "社交陪伴（精品中文）",
+    "description": "高傲妃子音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（精品中文）",
+    "age": 30,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanlingxi",
+    "name": "龙安灵希",
+    "gender": "女",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "社交陪伴（精品中文）",
+    "description": "可爱甜美音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（精品中文）",
+    "age": 25,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanxiaoxin",
+    "name": "龙安小昕",
+    "gender": "女",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "社交陪伴（精品中文）",
+    "description": "亲切活泼音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（精品中文）",
+    "age": 22,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longanhuan_v3.6",
+    "name": "龙安欢",
+    "gender": "女",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "社交陪伴（精品中文）",
+    "description": "社交陪伴（精品中文）",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴（精品中文）",
+    "age": 25,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longjielidou_v3.6",
+    "name": "龙杰力豆",
+    "gender": "男",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "儿童陪伴/智能玩具（精品儿童）",
+    "description": "天真男童",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "儿童陪伴/智能玩具（精品儿童）",
+    "age": 5,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longpaopao_v3.6",
+    "name": "龙泡泡",
+    "gender": "女",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "儿童陪伴/智能玩具（精品儿童）",
+    "description": "软糯可爱音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "儿童陪伴/智能玩具（精品儿童）",
+    "age": 5,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longhuohuo_v3.6",
+    "name": "龙火火",
+    "gender": "男",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "角色音/游戏（精品中文）",
+    "description": "顽皮少年音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "角色音/游戏（精品中文）",
+    "age": 8,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "longchuanshu_v3.6",
+    "name": "龙川叔",
+    "gender": "男",
+    "language": "中文（普通话）、英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "角色音/游戏（精品中文）",
+    "description": "川普大叔音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "角色音/游戏（精品中文）",
+    "age": 40,
+    "capabilities": {
+      "instructions": true,
+      "ssml": true,
+      "timestamps": true
+    },
+    "emotionSupport": "instructions"
+  },
+  {
+    "id": "loongmary",
+    "name": "loongmary",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "社交陪伴/语音助手（精品英文）",
+    "description": "温暖英音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴/语音助手（精品英文）",
+    "age": 20,
+    "capabilities": {
+      "instructions": false,
+      "ssml": false,
+      "timestamps": false
+    },
+    "emotionSupport": "none"
+  },
+  {
+    "id": "loongeva_v3.6",
+    "name": "loongeva",
+    "gender": "女",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "社交陪伴/语音助手（精品英文）",
+    "description": "高智美音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴/语音助手（精品英文）",
+    "age": 28,
+    "capabilities": {
+      "instructions": false,
+      "ssml": false,
+      "timestamps": false
+    },
+    "emotionSupport": "none"
+  },
+  {
+    "id": "loongjohn",
+    "name": "loongJohn",
+    "gender": "男",
+    "language": "英文",
+    "models": [
+      "qwen-audio-3.0-tts-flash"
+    ],
+    "category": "社交陪伴/语音助手（精品英文）",
+    "description": "沉稳亲切美音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-audio-tts-voice-list",
+    "scenarios": "社交陪伴/语音助手（精品英文）",
+    "age": 28,
+    "capabilities": {
+      "instructions": false,
+      "ssml": false,
+      "timestamps": false
+    },
+    "emotionSupport": "none"
+  },
+  {
+    "id": "Cherry",
+    "name": "芊悦",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "阳光积极、亲切自然小姐姐",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Serena",
+    "name": "苏瑶",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "温柔小姐姐",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Ethan",
+    "name": "晨煦",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "标准普通话",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Chelsie",
+    "name": "千雪",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "二次元虚拟女友",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Momo",
+    "name": "茉兔",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "撒娇搞怪",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Vivian",
+    "name": "十三",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "拽拽的、可爱的小暴躁",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Moon",
+    "name": "月白",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "率性帅气的月白",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Maia",
+    "name": "四月",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "知性与温柔的碰撞",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Kai",
+    "name": "凯",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "耳朵的一场 SPA",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Nofish",
+    "name": "不吃鱼",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "不会翘舌音的设计师",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Bella",
+    "name": "萌宝",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "喝酒不打醉拳的小萝莉",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Jennifer",
+    "name": "詹妮弗",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "品牌级、电影质感般美语女声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Ryan",
+    "name": "甜茶",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "节奏拉满",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Katerina",
+    "name": "卡捷琳娜",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "御姐音色",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Aiden",
+    "name": "艾登",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "精通厨艺的美语大男孩",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Eldric Sage",
+    "name": "沧明子",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "沉稳睿智的老者",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Mia",
+    "name": "乖小妹",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "温顺如春水",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Mochi",
+    "name": "沙小弥",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "聪明伶俐的小大人",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Bellona",
+    "name": "燕铮莺",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "声音洪亮",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Vincent",
+    "name": "田叔",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "一口独特的沙哑烟嗓",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Bunny",
+    "name": "萌小姬",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "“萌属性”爆棚的小萝莉",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Neil",
+    "name": "阿闻",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "平直的基线语调",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Elias",
+    "name": "墨讲师",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "既保持学科严谨性",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Arthur",
+    "name": "徐大爷",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "被岁月和旱烟浸泡过的质朴嗓音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Nini",
+    "name": "邻家妹妹",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "糯米糍一样又软又黏的嗓音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Seren",
+    "name": "小婉",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "温和舒缓的声线",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Pip",
+    "name": "顽屁小孩",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "调皮捣蛋却充满童真的他来了",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Stella",
+    "name": "少女阿月",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "平时是甜到发腻的迷糊少女音",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Bodega",
+    "name": "博德加",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "热情的西班牙大叔",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Sonrisa",
+    "name": "索尼莎",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "热情开朗的拉美大姐",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Alek",
+    "name": "阿列克",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "一开口",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Dolce",
+    "name": "多尔切",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "慵懒的意大利大叔",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Sohee",
+    "name": "素熙",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "温柔开朗",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Ono Anna",
+    "name": "小野杏",
+    "gender": "女",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "鬼灵精怪的青梅竹马",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Lenn",
+    "name": "莱恩",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "理性是底色",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Emilien",
+    "name": "埃米尔安",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "浪漫的法国大哥哥",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Andre",
+    "name": "安德雷",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "声音磁性",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Radio Gol",
+    "name": "拉迪奥·戈尔",
+    "gender": "男",
+    "language": "中文（普通话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "足球诗人 Rádio Gol",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Jada",
+    "name": "上海-阿珍",
+    "gender": "女",
+    "language": "中文（上海话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "风风火火的沪上阿姐",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Dylan",
+    "name": "北京-晓东",
+    "gender": "男",
+    "language": "中文（北京话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "北京胡同里长大的少年",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Li",
+    "name": "南京-老李",
+    "gender": "男",
+    "language": "中文（南京话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "耐心的瑜伽老师",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Marcus",
+    "name": "陕西-秦川",
+    "gender": "男",
+    "language": "中文（陕西话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "面宽话短",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Roy",
+    "name": "闽南-阿杰",
+    "gender": "男",
+    "language": "中文（闽南语）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "诙谐直爽、市井活泼的台湾哥仔形象",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Peter",
+    "name": "天津-李彼得",
+    "gender": "男",
+    "language": "中文（天津话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "天津相声",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Sunny",
+    "name": "四川-晴儿",
+    "gender": "女",
+    "language": "中文（四川话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "甜到你心里的川妹子",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Eric",
+    "name": "四川-程川",
+    "gender": "男",
+    "language": "中文（四川话）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "一个跳脱市井的四川成都男子",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Rocky",
+    "name": "粤语-阿强",
+    "gender": "男",
+    "language": "中文（粤语）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "幽默风趣的阿强",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  },
+  {
+    "id": "Kiki",
+    "name": "粤语-阿清",
+    "gender": "女",
+    "language": "中文（粤语）、英语、法语、德语、俄语、意大利语、西班牙语、葡萄牙语、日语、韩语",
+    "models": [
+      "qwen3-tts-flash"
+    ],
+    "category": "官方系统音色",
+    "description": "甜美的港妹闺蜜",
+    "verified": true,
+    "source": "https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list",
+    "emotionSupport": "unknown"
+  }
+]
