@@ -1,4 +1,4 @@
-// Real Edge browser checks with intercepted synthesis/settings writes. No paid calls.
+// Real Edge browser checks with intercepted synthesis/settings/voice-refresh writes. No paid calls.
 // Usage: node tests/browser-smoke.mjs http://127.0.0.1:8770
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
@@ -78,6 +78,11 @@ try {
     if (url.pathname === '/api/settings') {
       if (request.method !== 'GET') settingsWrites.push(JSON.parse(request.postData));
       response = Buffer.from(JSON.stringify(settings));
+    } else if (url.pathname === '/api/voices/refresh') {
+      const voices = [...vendor('minimax').voices.slice(0, 2),
+        {id: 'smoke-test_Woman', name: 'Test Woman', language: 'English', source: 'MiniMax get_voice · system', verified: true},
+        {id: 'smoke-test-neutral', name: 'Neutral', language: '官方系统音色', source: 'MiniMax get_voice · system', verified: true}];
+      response = Buffer.from(JSON.stringify({count: voices.length, voices}));
     } else if (url.pathname === '/api/synthesize') {
       const job = JSON.parse(request.postData);
       requests.push(job);
@@ -87,8 +92,8 @@ try {
         response = Buffer.from(JSON.stringify({...job, id, format: 'wav', originalFormat: 'wav', sampleRate: 24000, bytes: wav.length, elapsed: .25, createdAt: Date.now() / 1000, audioUrl: `/api/audio/${id}`, downloadUrl: `/api/audio/${id}?download=1`, payload: {model: job.model, input: {voice: job.voice}}}));
       }
     } else if (url.pathname.startsWith('/api/audio/smoke-')) { response = wav; contentType = 'audio/wav'; }
-    // Preview is the real local payload builder. Block every other unhandled write,
-    // including catalog refresh, so a new UI request cannot accidentally call a vendor.
+    // Preview is the real local payload builder. Synthesis, settings and refresh
+    // are mocked above; block every other unhandled write to avoid vendor calls.
     if (!response && request.method !== 'GET' && url.pathname !== '/api/preview') {
       await cdp('Fetch.failRequest', {requestId, errorReason: 'BlockedByClient'});
       throw new Error(`Unexpected backend write blocked: ${request.method} ${url.pathname}`);
@@ -131,6 +136,39 @@ try {
     assert.equal(await evaluate('document.querySelectorAll(".voice-card").length'), Math.min(100, matches.length));
     return matches;
   }
+  async function checkVoiceFilters(id, model) {
+    const all = voicesFor(id, model);
+    const current = await evaluate('document.querySelector("#current-voice-name").textContent');
+    await click('#voice-picker-open');
+    for (const gender of ['男', '女']) {
+      await click(`.filter-chip[data-filter="gender"][data-value="${gender}"]`);
+      assert.ok(await evaluate('document.querySelectorAll(".voice-card").length > 0'));
+      assert.ok(await evaluate(`[...document.querySelectorAll('.voice-card .voice-badge:first-child')].every(n => n.textContent === ${JSON.stringify(gender)})`));
+      if (id !== 'minimax') {
+        const expected = all.filter(v => v.gender === gender || v.gender === (gender === '男' ? 'male' : 'female'));
+        assert.equal(await evaluate('document.querySelector("#voice-count").textContent'), `${expected.length} / ${all.length}`);
+      }
+      if (await evaluate('Boolean(document.querySelector(".load-more"))')) {
+        await click('.load-more');
+        assert.ok(await evaluate('document.querySelectorAll(".voice-card").length > 100'));
+      }
+      await input('#voice-search', 'no-such-voice-filter-test');
+      assert.equal(await evaluate('document.querySelectorAll(".voice-card").length'), 0, 'Gender and search intersect');
+      assert.match(await evaluate('document.querySelector("#voice-list .empty").textContent'), /清空筛选/);
+      await input('#voice-search', '');
+      assert.ok(await evaluate('document.querySelectorAll(".voice-card").length <= 100'), 'Search resets pagination');
+    }
+    await click('.filter-chip[data-filter="language"][data-value="英语"]');
+    assert.ok(await evaluate('[...document.querySelectorAll(".voice-card .voice-badge:first-child")].every(n => n.textContent === "女")'));
+    const ids = await evaluate('[...document.querySelectorAll(".voice-card code")].map(n => n.textContent)');
+    assert.ok(ids.length > 0);
+    assert.ok(ids.every(voiceId => /英语|英文|English/i.test(all.find(v => v.id === voiceId).language)), 'Language and gender intersect');
+    await click('#voice-filters-clear');
+    await checkVoiceCount(id, model);
+    assert.equal(await evaluate('document.querySelector("#current-voice-name").textContent'), current, 'Filtering preserves the selected voice');
+    assert.equal(await evaluate('document.querySelector("#voice-filters-clear").disabled'), true);
+    await click('#voice-dialog-close');
+  }
   async function chooseVoice(id, model, voice) {
     if (!await evaluate('document.querySelector("#voice-dialog").open')) await click('#voice-picker-open');
     assert.equal(await evaluate('document.querySelector("#voice-dialog").open'), true);
@@ -157,6 +195,26 @@ try {
       if (!control.getClientRects().length) throw new Error('Grouped control is not visible');
     }`);
   }
+  async function checkSettingsLayout(fitsWithoutScroll = false) {
+    const layout = await evaluate(`(() => {
+      const dialog = document.querySelector('#settings-dialog');
+      const panel = [...document.querySelectorAll('.connection-form')].find(n => !n.hidden);
+      const fields = panel.querySelector('.connection-fields');
+      const footer = panel.querySelector('.connection-footer').getBoundingClientRect();
+      const close = document.querySelector('#settings-close').getBoundingClientRect();
+      const bounds = dialog.getBoundingClientRect();
+      return {visible: [...document.querySelectorAll('.connection-form')].filter(n => !n.hidden).length,
+        dialogScroll: dialog.scrollHeight - dialog.clientHeight, fieldsScroll: fields.scrollHeight - fields.clientHeight,
+        overflowX: dialog.scrollWidth - dialog.clientWidth, footerTop: footer.top, footerBottom: footer.bottom,
+        closeTop: close.top, closeBottom: close.bottom, dialogTop: bounds.top, dialogBottom: bounds.bottom, height: innerHeight};
+    })()`);
+    assert.equal(layout.visible, 1, 'Only one provider settings panel is visible');
+    assert.ok(layout.dialogScroll <= 1, 'Settings dialog itself does not scroll');
+    assert.ok(layout.overflowX <= 1, 'Settings fit within the dialog width');
+    assert.ok(layout.footerTop >= layout.dialogTop && layout.footerBottom <= Math.min(layout.height, layout.dialogBottom) + 1, 'Save and clear remain visible');
+    assert.ok(layout.closeTop >= 0 && layout.closeBottom <= layout.height, 'Close remains visible');
+    if (fitsWithoutScroll) assert.ok(layout.fieldsScroll <= 1, 'All connection fields fit without scrolling');
+  }
   async function previewPayload() {
     await evaluate('document.querySelector("details.advanced").open = true; document.querySelector("#request-preview").hidden = true');
     await click('#preview-button');
@@ -169,8 +227,27 @@ try {
   await cdp('Emulation.setDeviceMetricsOverride', {width: 1440, height: 1100, deviceScaleFactor: 1, mobile: false});
   await cdp('Page.navigate', {url: base});
   await until(`document.querySelectorAll('.provider-tab').length === ${catalog.providers.length}`);
+  assert.deepEqual(await evaluate(`[
+    voiceFacets({id: 'English_TestWoman', name: 'Test Woman', source: 'MiniMax get_voice · system'}).gender[0],
+    voiceFacets({id: 'male-test', name: '女声', source: 'MiniMax get_voice · system'}).gender[0],
+    voiceFacets({id: 'Arnold', name: 'Arnold', source: 'MiniMax get_voice · system'}).gender[0],
+    voiceFacets({id: 'male-test', name: '男声', gender: '不能', source: 'qwen'}).gender[0],
+    voiceFacets({id: 'test', language: '中文、支持30+语种识别'}).language
+  ]`), ['女', '未标注', '未标注', '未标注', ['中文']], 'Conflicting or invalid metadata and personal names do not invent gender or languages');
   assert.equal(await evaluate('document.querySelector("#model").value'), vendor('doubao').models[0].id);
   await checkVoiceCount('doubao', vendor('doubao').models[0].id);
+  await checkVoiceFilters('doubao', vendor('doubao').models[0].id);
+  await click('#voice-picker-open');
+  await input('#voice-filter-scenario', '角色扮演', 'change');
+  const roleIds = await evaluate('[...document.querySelectorAll(".voice-card code")].map(n => n.textContent)');
+  assert.ok(roleIds.length > 0);
+  assert.ok(roleIds.every(id => voicesFor('doubao', vendor('doubao').models[0].id).find(v => v.id === id).scenario.includes('角色扮演')));
+  await input('#voice-filter-tag', '豆包同款', 'change');
+  const taggedIds = await evaluate('[...document.querySelectorAll(".voice-card code")].map(n => n.textContent)');
+  assert.ok(taggedIds.length > 0);
+  assert.ok(taggedIds.every(id => voicesFor('doubao', vendor('doubao').models[0].id).find(v => v.id === id).catalogueEntries.some(entry => entry.tags.includes('豆包同款'))));
+  await click('#voice-filters-clear');
+  await click('#voice-dialog-close');
   const doubaoModel = vendor('doubao').models.find(m => m.verified && voicesFor('doubao', m.id).some(v => v.verified))
     || vendor('doubao').models.find(m => voicesFor('doubao', m.id).some(v => v.verified));
   assert.ok(doubaoModel, 'An official Doubao model/voice pair exists');
@@ -228,6 +305,15 @@ try {
   assert.equal(await evaluate('document.querySelector("#text").value'), '停顿<#0.5#>插入检查。');
   const miniModel = await evaluate('document.querySelector("#model").value');
   await checkVoiceCount('minimax', miniModel);
+  await checkVoiceFilters('minimax', miniModel);
+  await click('#voice-picker-open');
+  for (const [voiceId, gender] of [['male-qn-qingse', '男'], ['female-shaonv', '女'], ['English_Graceful_Lady', '女'], ['Grinch', '未标注']]) {
+    await input('#voice-search', voiceId);
+    const badges = await evaluate(`[...document.querySelectorAll('.voice-card')].filter(n => n.querySelector('code').textContent === ${JSON.stringify(voiceId)}).map(n => n.querySelector('.voice-badge').textContent)`);
+    assert.deepEqual(badges, [gender], `${voiceId}: explicit official gender markers only`);
+  }
+  await click('#voice-filters-clear');
+  await click('#voice-dialog-close');
   await hasControl('pitch');
   await input('#param-speed', '1.5');
   await openControlGroup('#param-voice_pitch');
@@ -254,6 +340,28 @@ try {
   const audioModel = 'qwen-audio-3.1-tts-flash';
   assert.equal(await evaluate('document.querySelector("#model").value'), audioModel);
   await checkVoiceCount('qwen', audioModel);
+  await checkVoiceFilters('qwen', audioModel);
+  await click('#voice-picker-open');
+  await input('#voice-filter-category', '精品英文音色', 'change');
+  const categoryIds = await evaluate('[...document.querySelectorAll(".voice-card code")].map(n => n.textContent)');
+  assert.ok(categoryIds.length > 0);
+  assert.ok(categoryIds.every(id => voicesFor('qwen', audioModel).find(v => v.id === id).category === '精品英文音色'));
+  await input('#voice-search', 'still-filtered');
+  await input('#model', 'qwen-audio-3.0-tts-flash', 'change');
+  assert.equal(await evaluate('document.querySelector("#voice-search").value'), '', 'Model switch resets search');
+  await checkVoiceCount('qwen', 'qwen-audio-3.0-tts-flash');
+  await checkVoiceFilters('qwen', 'qwen-audio-3.0-tts-flash');
+  await click('#voice-picker-open');
+  await click('.filter-chip[data-filter="gender"][data-value="未标注"]');
+  assert.equal(await evaluate('document.querySelectorAll(".voice-card").length'), 1, 'Invalid official gender stays unspecified');
+  assert.match(await evaluate('document.querySelector(".voice-card code").textContent'), /longchuanrongshuo/);
+  await chooseProvider('minimax');
+  await checkVoiceCount('minimax', miniModel);
+  assert.equal(await evaluate('document.querySelectorAll(".filter-chip[data-filter=gender][aria-pressed=true]").length'), 1);
+  assert.equal(await evaluate('document.querySelector(".filter-chip[data-filter=gender][aria-pressed=true]").dataset.value'), '', 'Provider switch resets filters');
+  await chooseProvider('qwen');
+  await input('#model', audioModel, 'change');
+  await click('#voice-dialog-close');
   for (const key of ['speed', 'volume', 'pitch', 'instructions', 'format', 'sample_rate', 'language_hints', 'ssml', 'timestamps', 'seed', 'hot_fix', 'aigc']) await hasControl(key);
   await click('.instruction-presets button:first-child');
   const instruction = await evaluate('document.querySelector("#param-instructions").value');
@@ -358,8 +466,20 @@ try {
   assert.equal(qwenJob.model, audioModel);
   assert.equal(qwenJob.voice, audioVoice.id);
   assert.equal(qwenJob.params.instructions, instruction, 'Queue snapshot survives model/voice switches');
+  await cdp('Emulation.setDeviceMetricsOverride', {width: 1366, height: 768, deviceScaleFactor: 1, mobile: false});
   await click('#settings-open');
   assert.equal(await evaluate('document.querySelector("#settings-dialog").open'), true);
+  assert.equal(await evaluate('document.querySelector("#settings-tab-qwen").getAttribute("aria-selected")'), 'true', 'Settings open on the current synthesis provider');
+  await checkSettingsLayout(true);
+  await click('#settings-tab-doubao');
+  await checkSettingsLayout(true);
+  await input('#credential-doubao-api_key', 'fake-unsaved-doubao');
+  const connectionDesktop = await cdp('Page.captureScreenshot', {format: 'png'});
+  await writeFile(path.join(artifacts, 'settings-desktop.png'), Buffer.from(connectionDesktop.data, 'base64'));
+  await click('#settings-tab-minimax');
+  await checkSettingsLayout(true);
+  await input('#credential-minimax-api_key', 'fake-unsaved-minimax');
+  await click('#settings-tab-qwen');
   await input('#credential-qwen-api_key', 'fake-browser-test-key');
   await evaluate('document.querySelector("#credential-qwen-api_key").form.requestSubmit()');
   await until('document.querySelector("#settings-message").textContent.includes("已保存")');
@@ -367,8 +487,18 @@ try {
   assert.equal(settingsWrites[0].provider, 'qwen');
   assert.equal(settingsWrites[0].fields.api_key, 'fake-browser-test-key');
   assert.equal(await evaluate('document.querySelector("#credential-qwen-api_key").value'), '');
-  assert.equal(await evaluate('Object.values(localStorage).some(value => value.includes("fake-browser-test-key"))'), false);
+  assert.equal(await evaluate('document.querySelector("#credential-doubao-api_key").value'), 'fake-unsaved-doubao', 'Saving Qwen preserves the Doubao draft');
+  assert.equal(await evaluate('document.querySelector("#credential-minimax-api_key").value'), 'fake-unsaved-minimax', 'Saving Qwen preserves the MiniMax draft');
+  assert.equal(await evaluate('Object.values(localStorage).some(value => /fake-browser-test-key|fake-unsaved/.test(value))'), false);
+  await checkSettingsLayout(true);
+  await evaluate('document.querySelector("#settings-tab-qwen").dispatchEvent(new KeyboardEvent("keydown", {key: "ArrowLeft", bubbles: true}))');
+  assert.equal(await evaluate('document.activeElement.id'), 'settings-tab-minimax', 'Arrow keys move between provider tabs');
+  await evaluate('document.activeElement.dispatchEvent(new KeyboardEvent("keydown", {key: "End", bubbles: true}))');
+  assert.equal(await evaluate('document.activeElement.id'), 'settings-tab-qwen');
   await click('#settings-close');
+  await until('[...document.querySelectorAll("#settings-dialog input")].every(n => !n.value)');
+  assert.equal(await evaluate('document.querySelector("#settings-dialog").open'), false, 'Closing settings clears all unsaved credentials');
+  await cdp('Emulation.setDeviceMetricsOverride', {width: 1440, height: 1100, deviceScaleFactor: 1, mobile: false});
   await click('.nav-item[data-view="studio"]');
   await input('#param-speed', '1.4');
   await click('#reset-controls');
@@ -393,17 +523,55 @@ try {
   const dark = await cdp('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true});
   await writeFile(path.join(artifacts, 'desktop-dark.png'), Buffer.from(dark.data, 'base64'));
   await click('#theme-toggle');
+  await click('#voice-picker-open');
+  await click('#voice-filters-clear');
+  await click('.filter-chip[data-filter="gender"][data-value="女"]');
+  const library = await cdp('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true});
+  await writeFile(path.join(artifacts, 'voice-filters-desktop.png'), Buffer.from(library.data, 'base64'));
+  await click('#voice-dialog-close');
   await cdp('Emulation.setDeviceMetricsOverride', {width: 400, height: 880, deviceScaleFactor: 1, mobile: true});
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Phone layout has no horizontal overflow');
+  await click('#settings-open');
+  await checkSettingsLayout(true);
+  await click('#settings-tab-doubao');
+  await checkSettingsLayout(true);
+  const connectionMobile = await cdp('Page.captureScreenshot', {format: 'png'});
+  await writeFile(path.join(artifacts, 'settings-mobile.png'), Buffer.from(connectionMobile.data, 'base64'));
+  await cdp('Emulation.setDeviceMetricsOverride', {width: 400, height: 480, deviceScaleFactor: 1, mobile: true});
+  for (const id of ['doubao', 'minimax', 'qwen']) {
+    await click(`#settings-tab-${id}`);
+    await checkSettingsLayout();
+    await evaluate(`document.querySelector('#settings-panel-${id} .connection-fields').scrollTop = 10000`);
+    await checkSettingsLayout();
+  }
+  await click('#settings-close');
+  await cdp('Emulation.setDeviceMetricsOverride', {width: 400, height: 880, deviceScaleFactor: 1, mobile: true});
   await click('#voice-picker-open');
   assert.equal(await evaluate('document.querySelector("#voice-dialog").open'), true);
   assert.ok(await evaluate('document.querySelector("#voice-dialog").getBoundingClientRect().width <= innerWidth - 32'), 'Phone voice library fits within viewport gutters');
+  assert.ok(await evaluate('document.querySelector("#voice-dialog").scrollWidth <= document.querySelector("#voice-dialog").clientWidth'), 'Phone filters have no horizontal overflow');
+  await click('.filter-chip[data-filter="gender"][data-value="男"]');
+  assert.ok(await evaluate('document.querySelectorAll(".voice-card").length > 0'), 'Phone gender filter returns matching voices');
+  assert.ok(await evaluate('[...document.querySelectorAll(".voice-card .voice-badge:first-child")].every(n => n.textContent === "男")'));
+  const phoneLibrary = await cdp('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true});
+  await writeFile(path.join(artifacts, 'voice-filters-mobile.png'), Buffer.from(phoneLibrary.data, 'base64'));
   await click('#voice-dialog-close');
   await evaluate('window.scrollTo(0, 0)');
   const mobile = await cdp('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true});
   await writeFile(path.join(artifacts, 'mobile.png'), Buffer.from(mobile.data, 'base64'));
+  await chooseProvider('minimax');
+  await click('#voice-picker-open');
+  await click('.filter-chip[data-filter="language"][data-value="葡萄牙语"]');
+  await click('#refresh-voices');
+  await until('document.querySelector("#voice-count").textContent === "4 / 4"');
+  assert.equal(await evaluate('Boolean(document.querySelector(".filter-chip[data-value=葡萄牙语]"))'), false, 'Refreshing voices rebuilds filter options and clears stale values');
+  await click('.filter-chip[data-filter="gender"][data-value="女"]');
+  assert.equal(await evaluate('document.querySelector(".voice-card code").textContent'), 'smoke-test_Woman');
+  await click('.filter-chip[data-filter="gender"][data-value="未标注"]');
+  assert.equal(await evaluate('document.querySelector(".voice-card code").textContent'), 'smoke-test-neutral', 'New API voices without metadata remain selectable');
+  await click('#voice-dialog-close');
   assert.deepEqual(errors, [], 'No browser JavaScript errors');
-  console.log('PASS: live catalogs, provider/model/voice selection, per-voice capabilities, Qwen-Audio instruction preview/tags, Qwen3 language/600-character limit, MiniMax mix/voice modification, queue snapshots, shared-text comparison, partial failures, audio playback, intercepted settings save, theme, 400px layout.');
+  console.log('PASS: official voice gender/language/category/scenario/tag filters, combined search, unspecified metadata, pagination/reset/refresh, live catalogs, provider/model/voice selection, per-voice capabilities, Qwen-Audio instruction preview/tags, Qwen3 language/600-character limit, MiniMax mix/voice modification, queue snapshots, shared-text comparison, partial failures, audio playback, intercepted settings save, provider settings tabs/draft preservation/keyboard navigation, fixed settings actions at desktop/mobile/short viewports, theme, 400px layout.');
   console.log(`Screenshots: ${path.join(artifacts, 'desktop.png')} and mobile.png`);
 } finally {
   if (socket?.readyState === WebSocket.OPEN) socket.close();

@@ -1,7 +1,20 @@
 'use strict';
 
 const $ = id => document.getElementById(id);
-const state = {catalog: null, settings: null, provider: 'doubao', models: {}, sessions: {}, queue: [], results: [], busy: false, voiceLimit: 100, view: 'studio', activeResultId: null};
+const state = {catalog: null, settings: null, provider: 'doubao', models: {}, sessions: {}, queue: [], results: [], busy: false, voiceLimit: 100, voiceFilters: {}, settingsProvider: null, view: 'studio', activeResultId: null};
+const voiceFacetCache = new WeakMap();
+const voiceLanguages = [
+  ['中文', /中文|普通话|Chinese|Mandarin|方言|粤语|广东话|上海话|四川话|重庆话|东北话|北京话|南京话|陕西话|云南话|宁波话|甘肃话|天津话|闽南语|Cantonese/i],
+  ['英语', /英语|英文|English/i], ['日语', /日语|日文|Japanese/i], ['韩语', /韩语|Korean/i],
+  ['粤语', /粤语|广东话|Cantonese/i], ['上海话', /上海/i], ['四川话', /四川/i], ['重庆话', /重庆/i], ['东北话', /东北/i],
+  ['北京话', /北京/i], ['天津话', /天津/i], ['陕西话', /陕西/i], ['南京话', /南京/i], ['云南话', /云南/i], ['宁波话', /宁波/i], ['甘肃话', /甘肃/i], ['闽南语', /闽南/i], ['河南话', /河南/i],
+  ['法语', /法语|French/i], ['德语', /德语|German/i], ['俄语', /俄语|Russian/i], ['西班牙语', /西班牙|西语|Spanish/i],
+  ['葡萄牙语', /葡萄牙|Portuguese/i], ['意大利语', /意大利|Italian/i], ['印尼语', /印尼|Indonesian/i],
+  ['泰语', /泰语|Thai/i], ['越南语', /越南|Vietnamese/i], ['马来语', /马来|Malay/i], ['菲律宾语', /菲律宾|Filipino/i],
+  ['阿拉伯语', /阿拉伯|Arabic/i], ['土耳其语', /土耳其|Turkish/i], ['波兰语', /波兰|Polish/i],
+  ['罗马尼亚语', /罗马尼亚|Romanian/i], ['希腊语', /希腊|Greek/i], ['捷克语', /捷克|Czech/i],
+  ['芬兰语', /芬兰|Finnish/i], ['印地语', /印地|Hindi/i], ['乌克兰语', /乌克兰|Ukrainian/i], ['荷兰语', /荷兰|Dutch/i]
+];
 let toastTimer;
 const samples = {
   narration: '黄昏的时候，最后一班电车穿过小城。她捧着一杯热茶，看着窗外缓缓亮起的灯，忽然觉得，生活还有许多值得期待的事。',
@@ -103,7 +116,7 @@ function updateSummary() {
 function renderProviders() {
   $('provider-tabs').replaceChildren(...state.catalog.providers.map(p => element('button', {
     class: `provider-tab ${p.id === state.provider ? 'active' : ''}`, role: 'tab', 'aria-selected': String(p.id === state.provider), title: p.subtitle,
-    onclick: () => { state.provider = p.id; state.voiceLimit = 100; $('voice-search').value = ''; renderSelection(); }
+    onclick: () => { state.provider = p.id; resetVoiceFilters(); renderSelection(); }
   }, [element('strong', {text: p.name}), element('small', {text: p.subtitle})])));
 }
 function renderSelection() {
@@ -129,20 +142,88 @@ function renderSelection() {
   updateSummary();
   updateCount();
 }
+function resetVoiceFilters() {
+  state.voiceFilters = {}; state.voiceLimit = 100; $('voice-search').value = '';
+}
+function voiceFacets(voice) {
+  if (voiceFacetCache.has(voice)) return voiceFacetCache.get(voice);
+  const split = value => typeof value === 'string' ? value.split(/[,，、;；/]/).map(item => item.trim()).filter(Boolean) : [];
+  const unique = values => [...new Set(values)];
+  const declaredGender = String(voice.gender || '').trim().toLowerCase();
+  let gender = ['male', '男'].includes(declaredGender) ? '男' : ['female', '女'].includes(declaredGender) ? '女' : '未标注';
+  let genderSource = voice.genderSource ? '性别依据官方音色 ID 的 male / female 标识。' : '性别依据官方音色表。';
+  if (!voice.gender && (voice.source?.includes('MiniMax') || voice.sources?.some(url => url.includes('minimax')) || voice.source?.includes('minimax'))) {
+    const names = [voice.id, voice.name, ...(voice.metadata?.documentation || []).map(item => item.name)].join(' ').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[_-]/g, ' ');
+    const male = /男|\b(male|man|men|boy|gentleman)\b/i.test(names);
+    const female = /女|\b(female|woman|women|girl|lady)\b/i.test(names);
+    if (male !== female) gender = male ? '男' : '女';
+    genderSource = '性别依据官方名称或 ID 中明确的男 / 女、male / female、man / woman、boy / girl 等标识。';
+  }
+  if (gender === '未标注') genderSource = '官方资料没有明确或有效的性别标注，未作推断。';
+  const language = voiceLanguages.filter(([, pattern]) => pattern.test(voice.language || '')).map(([label]) => label);
+  if (!language.length) language.push(voice.language && !/未注明|未标注|unknown|官方系统音色/i.test(voice.language) ? voice.language : '未标注');
+  const entries = voice.catalogueEntries || [];
+  const facets = {
+    gender: [gender], genderSource, language,
+    category: voice.category ? [voice.category] : [],
+    scenario: unique([...split(voice.scenario), ...split(voice.scenarios), ...entries.flatMap(entry => split(entry.scenario))]),
+    tag: unique(entries.flatMap(entry => split(entry.tags)))
+  };
+  voiceFacetCache.set(voice, facets);
+  return facets;
+}
+function renderVoiceFilters(voices) {
+  const nodes = [];
+  for (const [key, label] of [['gender', '性别'], ['language', '语种 / 方言'], ['category', '官方分类'], ['scenario', '适用场景'], ['tag', '官方标签']]) {
+    const counts = new Map();
+    for (const voice of voices) for (const value of voiceFacets(voice)[key]) counts.set(value, (counts.get(value) || 0) + 1);
+    if (state.voiceFilters[key] && !counts.has(state.voiceFilters[key])) state.voiceFilters[key] = '';
+    if (!counts.size || (key !== 'gender' && key !== 'language' && ![...counts.keys()].some(value => value !== '未标注'))) continue;
+    const values = key === 'gender' ? ['男', '女', '未标注'].filter(value => counts.has(value)) : [...counts.keys()];
+    const choose = value => { state.voiceFilters[key] = value; state.voiceLimit = 100; renderVoices(); };
+    if (key === 'gender' || key === 'language') {
+      nodes.push(element('div', {class: 'voice-filter-row', role: 'group', 'aria-label': label}, [
+        element('span', {class: 'voice-filter-label', text: label}),
+        element('div', {class: 'voice-filter-chips'}, [['', '全部', voices.length], ...values.map(value => [value, value, counts.get(value)])].map(([value, text, count]) => element('button', {
+          type: 'button', class: `filter-chip ${(state.voiceFilters[key] || '') === value ? 'active' : ''}`,
+          'data-filter': key, 'data-value': value, 'aria-pressed': String((state.voiceFilters[key] || '') === value),
+          onclick: () => { choose(value); [...$('voice-filters').querySelectorAll('.filter-chip')].find(button => button.dataset.filter === key && button.dataset.value === value)?.focus({preventScroll: true}); }
+        }, [text, element('span', {class: 'filter-count', text: String(count)})])))
+      ]));
+    } else {
+      const select = element('select', {id: `voice-filter-${key}`, 'data-filter': key, onchange: () => {
+        choose(select.value); $(`voice-filter-${key}`).focus();
+      }}, [element('option', {value: '', text: `全部${label}（${voices.length}）`}), ...values.map(value => element('option', {value, text: `${value}（${counts.get(value)}）`}))]);
+      select.value = state.voiceFilters[key] || '';
+      nodes.push(element('div', {class: 'voice-filter-select'}, [element('label', {for: select.id, text: label}), select]));
+    }
+  }
+  $('voice-filters').replaceChildren(...nodes);
+  $('voice-filters-clear').disabled = !$('voice-search').value && !Object.values(state.voiceFilters).some(Boolean);
+  $('voice-filter-note').textContent = state.provider === 'minimax' ? '性别取自官方名称或 ID 的明确标识；未明确的归为“未标注”。标签数字为当前模型、地域下的音色数。' : state.provider === 'doubao' ? '性别取自官方音色 ID；场景与标签沿用官方目录。标签数字为当前模型、地域下的音色数。' : '性别、分类与场景沿用官方音色表，缺失或异常项归为“未标注”。标签数字为当前模型、地域下的音色数。';
+}
 function renderVoices() {
   const selected = selectedVoice();
-  $('voice-description').textContent = selected ? [selected.gender, selected.description, selected.scenarios, selected.emotionSupport === 'unknown' ? '官方未提供逐音色的完整能力保证；控制项按模型提供，实际可用性由账号接口确认。' : ''].filter(Boolean).join(' · ') : '';
+  $('voice-description').textContent = selected ? [voiceFacets(selected).gender[0], selected.description, selected.scenario || selected.scenarios, selected.emotionSupport === 'unknown' ? '官方未提供逐音色的完整能力保证；控制项按模型提供，实际可用性由账号接口确认。' : ''].filter(Boolean).join(' · ') : '';
   const query = $('voice-search').value.toLowerCase().trim();
   const all = availableVoices();
-  const voices = all.filter(v => `${v.name} ${v.id} ${v.language} ${v.description || ''} ${v.category || ''}`.toLowerCase().includes(query));
+  renderVoiceFilters(all);
+  const voices = all.filter(v => {
+    const facets = voiceFacets(v);
+    const search = [v.name, v.id, v.language, v.description, ...['gender', 'language', 'category', 'scenario', 'tag'].flatMap(key => facets[key])].join(' ').toLowerCase();
+    return search.includes(query) && Object.entries(state.voiceFilters).every(([key, value]) => !value || facets[key].includes(value));
+  });
   $('voice-count').textContent = `${voices.length} / ${all.length}`;
-  $('voice-list').replaceChildren(...voices.slice(0, state.voiceLimit).map(v => element('button', {
-    class: `voice-card ${session().voice === v.id ? 'selected' : ''}`, role: 'radio', 'aria-checked': String(session().voice === v.id),
-    title: [v.name, v.description, v.id].filter(Boolean).join(' · '),
-    onclick: () => { session().voice = v.id; session().customVoice = ''; $('custom-voice').value = ''; renderVoices(); renderControls(); updateSummary(); $('voice-dialog').close(); }
-  }, [element('span', {class: 'voice-initial', text: v.name.slice(0, 1)}), element('span', {class: 'voice-info'}, [element('strong', {text: v.name}), element('small', {text: `${v.language} · ${v.source === 'MiniMax get_voice · system' ? '接口返回' : v.verified ? '官方文档' : '自定义'}`}), element('code', {text: v.id})]), element('span', {class: 'voice-check', 'aria-hidden': 'true', text: session().voice === v.id ? '●' : '○'})])));
+  $('voice-list').replaceChildren(...voices.slice(0, state.voiceLimit).map(v => {
+    const facets = voiceFacets(v);
+    return element('button', {
+      class: `voice-card ${session().voice === v.id ? 'selected' : ''}`, role: 'radio', 'aria-checked': String(session().voice === v.id),
+      title: [v.name, v.description, ...facets.scenario, ...facets.tag, v.id].filter(Boolean).join(' · '),
+      onclick: () => { session().voice = v.id; session().customVoice = ''; $('custom-voice').value = ''; renderVoices(); renderControls(); updateSummary(); $('voice-dialog').close(); }
+    }, [element('span', {class: 'voice-initial', text: v.name.slice(0, 1)}), element('span', {class: 'voice-info'}, [element('strong', {text: v.name}), element('small', {text: `${v.language} · ${v.source === 'MiniMax get_voice · system' ? '接口返回' : v.verified ? '官方文档' : '自定义'}`}), element('span', {class: 'voice-badges'}, [element('span', {class: 'voice-badge', text: facets.gender[0], title: facets.genderSource}), ...[facets.scenario[0] || facets.category[0], facets.tag[0]].filter(Boolean).map(text => element('span', {class: 'voice-badge', text, title: text}))]), element('code', {text: v.id})]), element('span', {class: 'voice-check', 'aria-hidden': 'true', text: session().voice === v.id ? '●' : '○'})]);
+  }));
   if (voices.length > state.voiceLimit) $('voice-list').append(element('button', {class: 'button secondary load-more', text: `显示更多（还有 ${voices.length - state.voiceLimit} 个）`, onclick: () => { state.voiceLimit += 100; renderVoices(); }}));
-  if (!voices.length) $('voice-list').append(element('p', {class: 'empty', text: '没有匹配的音色。可尝试其他关键词，或指定音色 ID。'}));
+  if (!voices.length) $('voice-list').append(element('p', {class: 'empty', text: '没有匹配的音色。可清空筛选、修改关键词，或指定音色 ID。'}));
 }
 function controlField(label, node, hint) {
   return element('div', {class: 'field'}, [element('label', {for: node.id, text: label}), node, ...(hint ? [element('p', {class: 'hint', text: hint})] : [])]);
@@ -439,7 +520,7 @@ async function generateOne() {
   try {
     const job = getJob();
     if (!job.text) throw new Error('请先输入要合成的文本。');
-    if (!configuredFor(job)) { $('settings-dialog').showModal(); throw new Error('请先配置同地域的厂商凭据；Qwen-Audio 还需要业务空间 ID。'); }
+    if (!configuredFor(job)) { openSettings(job.provider); throw new Error('请先配置同地域的厂商凭据；Qwen-Audio 还需要业务空间 ID。'); }
     setBusy(true);
     const result = await api('/api/synthesize', job);
     state.results.unshift(result);
@@ -457,7 +538,7 @@ async function compareAll() {
   const jobs = structuredClone(state.queue);
   if (!jobs.length) return;
   const missing = [...new Set(jobs.filter(job => !configuredFor(job)).map(job => providerName(job.provider)))];
-  if (missing.length) { $('settings-dialog').showModal(); return toast(`请先配置：${missing.join('、')}`, true); }
+  if (missing.length) { openSettings(jobs.find(job => !configuredFor(job)).provider); return toast(`请先配置：${missing.join('、')}`, true); }
   setBusy(true, '正在生成对比…');
   const errors = [];
   let success = 0;
@@ -480,38 +561,85 @@ async function compareAll() {
     setView('history');
   } finally { setBusy(false); }
 }
-function renderSettings() {
-  $('settings-forms').replaceChildren(...state.catalog.providers.map(p => {
+function selectSettingsProvider(id) {
+  state.settingsProvider = id;
+  for (const tab of $('settings-tabs').querySelectorAll('[role="tab"]')) {
+    const active = tab.dataset.provider === id;
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+  }
+  for (const form of $('settings-forms').children) form.hidden = form.dataset.provider !== id;
+  $('settings-message').textContent = '';
+}
+function openSettings(id = state.provider) {
+  if (!state.catalog) return;
+  selectSettingsProvider(id);
+  $('settings-dialog').showModal();
+  for (const fields of $('settings-forms').querySelectorAll('.connection-fields')) fields.scrollTop = 0;
+}
+function renderSettings(updatedProvider = null) {
+  const current = state.settingsProvider || state.provider;
+  $('settings-tabs').replaceChildren(...state.catalog.providers.map((p, index) => element('button', {
+    id: `settings-tab-${p.id}`, type: 'button', class: 'connection-tab', role: 'tab', 'data-provider': p.id,
+    'aria-controls': `settings-panel-${p.id}`, onclick: () => selectSettingsProvider(p.id),
+    onkeydown: event => {
+      const keys = {ArrowRight: (index + 1) % state.catalog.providers.length, ArrowLeft: (index + state.catalog.providers.length - 1) % state.catalog.providers.length, Home: 0, End: state.catalog.providers.length - 1};
+      if (!(event.key in keys)) return;
+      event.preventDefault();
+      const id = state.catalog.providers[keys[event.key]].id;
+      selectSettingsProvider(id); $(`settings-tab-${id}`).focus();
+    }
+  }, [element('strong', {text: p.name}), element('span', {class: `status-badge ${state.settings.providers[p.id].configured ? 'connected' : ''}`, text: state.settings.providers[p.id].configured ? '已配置' : '未配置'})])));
+  if (!updatedProvider) $('settings-forms').replaceChildren();
+  for (const p of state.catalog.providers.filter(p => !updatedProvider || p.id === updatedProvider)) {
     const status = state.settings.providers[p.id];
     const fieldNodes = {};
-    const fields = p.credentialFields.map(field => {
+    const fields = [...p.credentialFields].sort((a, b) => Number(b.id === 'api_key') - Number(a.id === 'api_key')).map(field => {
       const input = element('input', {id: `credential-${p.id}-${field.id}`, type: field.secret ? 'password' : 'text', autocomplete: 'off', placeholder: status.fields[field.id] ? '已配置，留空保留' : field.default || '尚未配置', maxlength: 4096});
       fieldNodes[field.id] = input;
-      return controlField(field.label, input);
+      const node = controlField(field.label, input);
+      if (field.id === 'api_key' || field.id === 'resource_id') node.classList.add('connection-wide');
+      return node;
     });
     const region = element('select', {id: `region-${p.id}`}, p.regions.map(r => element('option', {value: r.id, text: r.name})));
     region.value = status.region;
-    const save = element('button', {class: 'button secondary small', type: 'submit', text: '保存到本机'});
+    const save = element('button', {id: `settings-save-${p.id}`, class: 'button primary', type: 'submit', text: '保存到本机'});
     const clear = element('button', {class: 'text-button', type: 'button', text: '清除凭据', onclick: async () => {
+      save.disabled = clear.disabled = true;
       try {
         state.settings = await api('/api/settings', {provider: p.id, region: region.value, clear: true});
-        renderSettings(); renderSelection(); toast(`${p.name} 凭据已清除`);
+        renderSettings(p.id); renderSelection();
+        $('settings-message').textContent = `${p.name} 凭据已从本机清除。`;
       } catch (error) { $('settings-message').textContent = error.message; }
+      finally { save.disabled = clear.disabled = false; }
     }});
-    const form = element('form', {class: 'connection-form', onsubmit: async event => {
-      event.preventDefault(); save.disabled = true;
+    const guidance = p.id === 'doubao' ? '新版鉴权只需 API Key；使用旧版 Access Key 时还需填写 App ID。Resource ID 通常保持 auto。' : p.id === 'qwen' ? 'Qwen-Audio 3.1 / 3.0 需要业务空间 ID，且必须与 API Key 同地域；Qwen3 Flash 不需要业务空间 ID。' : 'API Key 与服务地域需对应：中国站选择中国大陆，国际站选择国际站。';
+    const form = element('form', {id: `settings-panel-${p.id}`, class: 'connection-form', role: 'tabpanel', 'aria-labelledby': `settings-tab-${p.id}`, 'data-provider': p.id, onsubmit: async event => {
+      event.preventDefault(); save.disabled = clear.disabled = true;
       const values = Object.fromEntries(Object.entries(fieldNodes).map(([key, node]) => [key, node.value]));
       if (p.id === 'doubao' && !values.resource_id && !status.fields.resource_id) values.resource_id = 'auto';
       try {
         state.settings = await api('/api/settings', {provider: p.id, region: region.value, fields: values});
         for (const input of Object.values(fieldNodes)) input.value = '';
-        renderSettings(); renderSelection();
+        renderSettings(p.id); renderSelection();
         $('settings-message').textContent = `${p.name} 连接设置已保存到本机，重启后自动加载。凭据是否有效将在实际请求时由厂商验证。`;
+        if (state.settingsProvider === p.id && $('settings-dialog').open) $(`settings-save-${p.id}`).focus();
       } catch (error) { $('settings-message').textContent = error.message; }
-      finally { save.disabled = false; }
-    }}, [element('div', {class: 'connection-title'}, [element('h3', {text: p.name}), element('span', {class: `status-badge ${status.configured ? 'connected' : ''}`, text: status.configured ? '已配置' : '未配置'})]), controlField('服务地域', region), ...fields, element('div', {class: 'connection-actions'}, [save, clear])]);
-    return form;
-  }));
+      finally { save.disabled = clear.disabled = false; }
+    }}, [
+      element('div', {class: 'connection-fields'}, [
+        element('p', {class: 'hint connection-guidance', text: guidance}),
+        element('div', {class: 'connection-grid'}, [fields[0], controlField('服务地域', region), ...fields.slice(1)]),
+        element('details', {class: 'connection-help'}, [element('summary', {text: '本地保存与清除说明'}), element('p', {class: 'hint', text: '配置保存在 tts-studio/settings.local.json，包含明文凭据，请勿分享。输入框留空保存会保留已有值；清除凭据会同时清除本地文件中的该厂商配置。页面不回显密钥，也不将密钥保存到浏览器存储。'})])
+      ]),
+      element('div', {class: 'connection-footer'}, [element('span', {class: 'hint', text: '仅保存当前厂商 · 留空保留已有值'}), element('div', {class: 'connection-actions'}, [clear, save])])
+    ]);
+    const previous = $(`settings-panel-${p.id}`);
+    if (previous) previous.replaceWith(form);
+    else $('settings-forms').append(form);
+  }
+  selectSettingsProvider(current);
 }
 async function initialize() {
   try {
@@ -553,8 +681,9 @@ for (const [id, step] of [['player-prev', 1], ['player-next', -1]]) $(id).addEve
 });
 $('text').addEventListener('input', updateCount);
 document.querySelectorAll('[data-sample]').forEach(button => button.addEventListener('click', () => { $('text').value = samples[button.dataset.sample]; updateCount(); }));
-$('model').addEventListener('change', () => { state.models[state.provider] = $('model').value; $('voice-search').value = ''; renderSelection(); });
-$('voice-search').addEventListener('input', renderVoices);
+$('model').addEventListener('change', () => { state.models[state.provider] = $('model').value; resetVoiceFilters(); renderSelection(); });
+$('voice-search').addEventListener('input', () => { state.voiceLimit = 100; renderVoices(); });
+$('voice-filters-clear').addEventListener('click', () => { resetVoiceFilters(); renderVoices(); $('voice-search').focus(); });
 $('custom-model').addEventListener('input', () => { session().customModel = $('custom-model').value.trim(); renderControls(); updateSummary(); });
 $('custom-voice').addEventListener('input', () => { session().customVoice = $('custom-voice').value.trim(); updateSummary(); });
 $('extra-json').addEventListener('input', () => { session().extra = $('extra-json').value; $('request-preview').hidden = true; });
@@ -574,7 +703,7 @@ $('queue-add').addEventListener('click', () => {
 });
 $('compare-run').addEventListener('click', compareAll);
 $('clear-results').addEventListener('click', () => { document.querySelectorAll('audio').forEach(audio => audio.pause()); state.results = []; renderResults(); });
-$('settings-open').addEventListener('click', () => { $('settings-message').textContent = ''; $('settings-dialog').showModal(); });
+$('settings-open').addEventListener('click', () => openSettings());
 $('settings-close').addEventListener('click', () => $('settings-dialog').close());
 $('settings-dialog').addEventListener('close', () => { $('settings-dialog').querySelectorAll('input').forEach(input => { input.value = ''; }); });
 $('refresh-voices').addEventListener('click', async () => {
